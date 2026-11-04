@@ -1,0 +1,743 @@
+==== DataInitializer.java ====
+package com.bbu.attendance.config;
+
+public class DataInitializer {
+    
+}
+
+
+==== AuthController.java ====
+
+
+==== GlobalExceptionHandler.java ====
+
+
+==== RoleController.java ====
+package com.bbu.attendance.controller;
+
+import com.bbu.attendance.dto.RoleRequest;
+import com.bbu.attendance.dto.RoleResponse;
+import com.bbu.attendance.service.RoleService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/roles")
+@RequiredArgsConstructor
+public class RoleController {
+
+    private final RoleService roleService;
+
+    // POST /api/roles
+    @PostMapping
+    public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest request) {
+        RoleResponse createdRole = roleService.createRole(request);
+        return ResponseEntity.ok(createdRole);
+    }
+
+    // GET /api/roles
+    @GetMapping
+    public ResponseEntity<List<RoleResponse>> getAllRoles() {
+        return ResponseEntity.ok(roleService.getAllRoles());
+    }
+}
+
+==== UserController.java ====
+package com.bbu.attendance.controller;
+
+import com.bbu.attendance.dto.UserRequest;
+import com.bbu.attendance.dto.UserResponse;
+import com.bbu.attendance.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+
+    // POST /api/users
+    @PostMapping
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest request) {
+        UserResponse createdUser = userService.createUser(request);
+        return ResponseEntity.ok(createdUser);
+    }
+
+    // GET /api/users/{email}
+    @GetMapping("/{email}")
+    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) {
+        UserResponse user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+}
+
+==== ApiResponse.java ====
+
+
+==== AuthResponse.java ====
+
+
+==== LoginRequest.java ====
+
+
+==== RegisterRequest.java ====
+
+
+==== RoleRequest.java ====
+package com.bbu.attendance.dto;
+
+public record RoleRequest(
+        String name,
+        String description
+) {}
+
+==== RoleResponse.java ====
+package com.bbu.attendance.dto;
+
+public record RoleResponse(
+        Long id,
+        String name,
+        String description
+) {}
+
+
+==== UserRequest.java ====
+package com.bbu.attendance.dto;
+
+public record UserRequest(
+        String name,
+        String email,
+        String password,
+        Long roleId,
+        String phone,
+        String studentCode,
+        String employeeCode
+) {}
+
+
+==== UserResponse.java ====
+package com.bbu.attendance.dto;
+
+public record UserResponse(
+        Long id,
+        String name,
+        String email,
+        String phone,
+        String studentCode,
+        String employeeCode,
+        String roleName,
+        String status
+) {}
+
+==== Role.java ====
+package com.bbu.attendance.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "roles")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false, length = 50)
+    private String name; // 'STUDENT', 'TEACHER', 'ADMIN'
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+}
+
+==== User.java ====
+package com.bbu.attendance.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
+    @Column(name = "student_code", unique = true, length = 50)
+    private String studentCode;
+
+    @Column(name = "employee_code", unique = true, length = 50)
+    private String employeeCode;
+
+    @Column(nullable = false, length = 150)
+    private String name;
+
+    @Column(nullable = false, unique = true, length = 150)
+    private String email;
+
+    @Column(length = 30)
+    private String phone;
+
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @Column(length = 30)
+    @Builder.Default
+    private String status = "ACTIVE"; // ACTIVE, SUSPENDED
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+}
+
+==== RoleRepository.java ====
+package com.bbu.attendance.repository;
+
+import com.bbu.attendance.entity.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findByName(String name);
+    boolean existsByName(String name);
+}
+
+==== UserRepository.java ====
+package com.bbu.attendance.repository;
+
+import com.bbu.attendance.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
+    boolean existsByStudentCode(String studentCode);
+}
+
+==== CustomUserDetailsService.java ====
+package com.bbu.attendance.security;
+
+import com.bbu.attendance.entity.User;
+import com.bbu.attendance.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // Fetch the user from the database
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
+
+        // Convert the user's roles into Spring Security SimpleGrantedAuthority objects
+        var authorities = java.util.Collections.singletonList(
+                new SimpleGrantedAuthority(user.getRole().getName())
+        );
+        // Check if the user's status is ACTIVE
+        boolean isActive = "ACTIVE".equalsIgnoreCase(user.getStatus());
+        // Return a Spring Security User object
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),          // Using email as the principal
+                user.getPasswordHash(),   // Matches your passwordHash field
+                isActive,                 // Checked against your String status field
+                true,                     // account non-expired
+                true,                     // credentials non-expired
+                true,                     // account non-locked
+                authorities
+        );
+    }
+}
+
+==== JwtAuthenticationFilter.java ====
+
+
+==== JwtService.java ====
+
+
+==== SecurityConfig.java ====
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+// ... inside your SecurityConfig class ...
+
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
+
+==== AuthServiceImpl.java ====
+
+
+==== RoleServiceImpl.java ====
+package com.bbu.attendance.service.impl;
+
+import com.bbu.attendance.dto.RoleRequest;
+import com.bbu.attendance.dto.RoleResponse;
+import com.bbu.attendance.entity.Role;
+import com.bbu.attendance.repository.RoleRepository;
+import com.bbu.attendance.service.RoleService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class RoleServiceImpl implements RoleService {
+
+    private final RoleRepository roleRepository;
+
+    @Override
+    public RoleResponse createRole(RoleRequest request) {
+        if (roleRepository.existsByName(request.name())) {
+            throw new RuntimeException("Role name already exists");
+        }
+
+        Role role = Role.builder()
+                .name(request.name())
+                .description(request.description())
+                .build();
+
+        Role savedRole = roleRepository.save(role);
+        return mapToResponse(savedRole);
+    }
+
+    @Override
+    public List<RoleResponse> getAllRoles() {
+        return roleRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    private RoleResponse mapToResponse(Role role) {
+        return new RoleResponse(
+            role.getId(),
+            role.getName(),
+            role.getDescription()
+        );
+    }
+}
+
+==== UserServiceImpl.java ====
+package com.bbu.attendance.service.impl;
+
+import com.bbu.attendance.dto.UserRequest;
+import com.bbu.attendance.dto.UserResponse;
+import com.bbu.attendance.entity.Role;
+import com.bbu.attendance.entity.User;
+import com.bbu.attendance.repository.RoleRepository;
+import com.bbu.attendance.repository.UserRepository;
+import com.bbu.attendance.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder; // Requires a PasswordEncoder bean in your SecurityConfig
+
+    @Override
+    public UserResponse createUser(UserRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new RuntimeException("Email already in use");
+        }
+
+        Role role = roleRepository.findById(request.roleId())
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        User user = User.builder()
+                .name(request.name())
+                .email(request.email())
+                .phone(request.phone())
+                .studentCode(request.studentCode())
+                .employeeCode(request.employeeCode())
+                .passwordHash(passwordEncoder.encode(request.password())) // Hash the password
+                .role(role)
+                .status("ACTIVE")
+                .build();
+
+        User savedUser = userRepository.save(user);
+        return mapToResponse(savedUser);
+    }
+
+    @Override
+    public UserResponse getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return mapToResponse(user);
+    }
+
+    // Helper method to convert Entity to DTO
+    private UserResponse mapToResponse(User user) {
+        return new UserResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getStudentCode(),
+                user.getEmployeeCode(),
+                user.getRole().getName(),
+                user.getStatus()
+        );
+    }
+}
+
+==== AuthService.java ====
+
+
+==== RoleService.java ====
+package com.bbu.attendance.service;
+
+import com.bbu.attendance.dto.RoleRequest;
+import com.bbu.attendance.dto.RoleResponse;
+import java.util.List;
+
+public interface RoleService {
+    RoleResponse createRole(RoleRequest request);
+    List<RoleResponse> getAllRoles();
+}
+
+==== UserService.java ====
+package com.bbu.attendance.service;
+
+import com.bbu.attendance.dto.UserRequest;
+import com.bbu.attendance.dto.UserResponse;
+
+public interface UserService {
+    UserResponse createUser(UserRequest request);
+    UserResponse getUserByEmail(String email);
+}
+
+==== AttendanceApplication.java ====
+package com.bbu.attendance;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AttendanceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AttendanceApplication.class, args);
+        System.out.println("=================================================");
+        System.out.println(">>> SMART ATTENDANCE BACKEND STARTED ON PORT 8080");
+        System.out.println(">>> Swagger/Postman Endpoint: http://localhost:8080/api/auth/");
+        System.out.println("=================================================");
+    }
+}
+
+
+==== schema.sql ====
+-- ====================================================================
+-- SMART & SECURE ATTENDANCE SYSTEM - DATABASE INITIALIZATION SCRIPT
+-- Auto-executed by Docker on container startup (/docker-entrypoint-initdb.d/)
+-- ====================================================================
+
+-- 1. ROLES TABLE
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL, -- 'STUDENT', 'TEACHER', 'ADMIN'
+    description TEXT
+);
+
+-- 2. USERS TABLE
+CREATE TABLE IF NOT EXISTS users (
+    id BIGSERIAL PRIMARY KEY,
+    role_id INT NOT NULL REFERENCES roles(id),
+    student_code VARCHAR(50) UNIQUE,
+    employee_code VARCHAR(50) UNIQUE,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    phone VARCHAR(30),
+    password_hash VARCHAR(255) NOT NULL,
+    status VARCHAR(30) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3. DEVICES TABLE (Device Binding)
+CREATE TABLE IF NOT EXISTS devices (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    device_uuid VARCHAR(255) UNIQUE NOT NULL,
+    device_name VARCHAR(100),
+    platform VARCHAR(50),
+    is_active BOOLEAN DEFAULT TRUE,
+    registered_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_used_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. ROOMS TABLE (Geofence & Multi-floor)
+CREATE TABLE IF NOT EXISTS rooms (
+    id SERIAL PRIMARY KEY,
+    room_code VARCHAR(50) UNIQUE NOT NULL,
+    building_name VARCHAR(100) NOT NULL,
+    floor_number INT NOT NULL DEFAULT 1,
+    latitude DECIMAL(10, 8) NOT NULL,
+    longitude DECIMAL(11, 8) NOT NULL,
+    geofence_radius DECIMAL(5, 2) DEFAULT 40.00,
+    status VARCHAR(30) DEFAULT 'ACTIVE'
+);
+
+-- 5. CLASSES TABLE (with Invite Code)
+CREATE TABLE IF NOT EXISTS classes (
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    description TEXT,
+    teacher_id BIGINT NOT NULL REFERENCES users(id),
+    invite_code VARCHAR(10) UNIQUE NOT NULL,
+    is_invite_open BOOLEAN DEFAULT TRUE,
+    invite_expires_at TIMESTAMP WITH TIME ZONE NULL,
+    max_students INT DEFAULT 60,
+    status VARCHAR(30) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 6. CLASS_STUDENTS TABLE (Enrollment)
+CREATE TABLE IF NOT EXISTS class_students (
+    id BIGSERIAL PRIMARY KEY,
+    class_id BIGINT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+    student_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    status VARCHAR(30) DEFAULT 'ENROLLED',
+    enrolled_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_student_class UNIQUE(class_id, student_id)
+);
+
+-- 7. CLASS_SCHEDULES TABLE
+CREATE TABLE IF NOT EXISTS class_schedules (
+    id BIGSERIAL PRIMARY KEY,
+    class_id BIGINT NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+    room_id INT NOT NULL REFERENCES rooms(id),
+    day_of_week INT NOT NULL, -- 1: Monday, 7: Sunday
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    status VARCHAR(30) DEFAULT 'ACTIVE'
+);
+
+-- 8. ATTENDANCE_SESSIONS TABLE
+CREATE TABLE IF NOT EXISTS attendance_sessions (
+    id BIGSERIAL PRIMARY KEY,
+    class_id BIGINT NOT NULL REFERENCES classes(id),
+    teacher_id BIGINT NOT NULL REFERENCES users(id),
+    room_id INT NOT NULL REFERENCES rooms(id),
+    schedule_id BIGINT REFERENCES class_schedules(id),
+    session_date DATE NOT NULL,
+    start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_time TIMESTAMP WITH TIME ZONE,
+    late_threshold_minutes INT DEFAULT 15,
+    qr_secret_salt VARCHAR(100) NOT NULL,
+    status VARCHAR(30) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    closed_at TIMESTAMP WITH TIME ZONE
+);
+
+-- 9. ATTENDANCE_RECORDS TABLE (7-Factor Verification)
+CREATE TABLE IF NOT EXISTS attendance_records (
+    id BIGSERIAL PRIMARY KEY,
+    session_id BIGINT NOT NULL REFERENCES attendance_sessions(id),
+    student_id BIGINT NOT NULL REFERENCES users(id),
+    status VARCHAR(30) NOT NULL, -- 'PRESENT', 'LATE', 'ABSENT', 'EXCUSED', 'N/A'
+    check_in_time TIMESTAMP WITH TIME ZONE,
+    client_latitude DECIMAL(10, 8),
+    client_longitude DECIMAL(11, 8),
+    client_ip VARCHAR(50),
+    device_id BIGINT REFERENCES devices(id),
+    biometric_verified BOOLEAN DEFAULT FALSE,
+    wifi_ip_verified BOOLEAN DEFAULT FALSE,
+    location_verified BOOLEAN DEFAULT FALSE,
+    qr_verified BOOLEAN DEFAULT FALSE,
+    is_manual_override BOOLEAN DEFAULT FALSE,
+    override_by BIGINT REFERENCES users(id),
+    override_reason TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_session_student UNIQUE(session_id, student_id)
+);
+
+-- 10. LEAVE_REQUESTS TABLE
+CREATE TABLE IF NOT EXISTS leave_requests (
+    id BIGSERIAL PRIMARY KEY,
+    student_id BIGINT NOT NULL REFERENCES users(id),
+    class_id BIGINT NOT NULL REFERENCES classes(id),
+    session_id BIGINT REFERENCES attendance_sessions(id),
+    date_from DATE NOT NULL,
+    date_to DATE NOT NULL,
+    reason VARCHAR(100) NOT NULL,
+    description TEXT,
+    attachment_path VARCHAR(255),
+    status VARCHAR(30) DEFAULT 'PENDING',
+    reviewed_by BIGINT REFERENCES users(id),
+    reviewed_at TIMESTAMP WITH TIME ZONE,
+    review_comment TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 11. TEACHER_ABSENCE_REPORTS TABLE
+CREATE TABLE IF NOT EXISTS teacher_absence_reports (
+    id BIGSERIAL PRIMARY KEY,
+    student_id BIGINT NOT NULL REFERENCES users(id),
+    session_id BIGINT NOT NULL REFERENCES attendance_sessions(id),
+    reported_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    client_latitude DECIMAL(10, 8),
+    client_longitude DECIMAL(11, 8),
+    description TEXT,
+    status VARCHAR(30) DEFAULT 'PENDING',
+    reviewed_by BIGINT REFERENCES users(id),
+    reviewed_at TIMESTAMP WITH TIME ZONE,
+    review_comment TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 12. ATTENDANCE_DISPUTES TABLE
+CREATE TABLE IF NOT EXISTS attendance_disputes (
+    id BIGSERIAL PRIMARY KEY,
+    attendance_record_id BIGINT NOT NULL REFERENCES attendance_records(id),
+    student_id BIGINT NOT NULL REFERENCES users(id),
+    reason TEXT NOT NULL,
+    evidence_path VARCHAR(255),
+    status VARCHAR(30) DEFAULT 'PENDING',
+    reviewed_by BIGINT REFERENCES users(id),
+    reviewed_at TIMESTAMP WITH TIME ZONE,
+    review_comment TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 13. AUDIT_LOGS TABLE (Immutable Record)
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id),
+    action VARCHAR(100) NOT NULL,
+    entity_name VARCHAR(100) NOT NULL,
+    entity_id BIGINT NOT NULL,
+    old_value JSONB,
+    new_value JSONB,
+    ip_address VARCHAR(50),
+    user_agent VARCHAR(255),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 14. NOTIFICATIONS TABLE
+CREATE TABLE IF NOT EXISTS notifications (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users(id),
+    title VARCHAR(200) NOT NULL,
+    message TEXT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- INDEXES
+CREATE INDEX IF NOT EXISTS idx_classes_invite_code ON classes(invite_code);
+CREATE INDEX IF NOT EXISTS idx_attendance_records_session ON attendance_records(session_id);
+CREATE INDEX IF NOT EXISTS idx_attendance_records_student ON attendance_records(student_id);
+CREATE INDEX IF NOT EXISTS idx_attendance_sessions_class ON attendance_sessions(class_id);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_action ON audit_logs(action);
+
+-- ====================================================================
+-- INITIAL SEED DATA
+-- ====================================================================
+
+-- Insert Default Roles
+INSERT INTO roles (id, name, description) VALUES
+(1, 'STUDENT', 'University Student Role'),
+(2, 'TEACHER', 'Lecturer / Professor Role'),
+(3, 'ADMIN', 'System Administrator Role')
+ON CONFLICT (id) DO NOTHING;
+
+-- Insert Sample Rooms (Build Bright University - Sample Campus)
+INSERT INTO rooms (id, room_code, building_name, floor_number, latitude, longitude, geofence_radius) VALUES
+(1, 'ROOM-402', 'Building B', 4, 11.55640000, 104.92820000, 40.00),
+(2, 'ROOM-201', 'Building A', 2, 11.55650000, 104.92810000, 40.00)
+ON CONFLICT (id) DO NOTHING;
+
+-- Insert Sample Administrator Account (Password: admin123 hashed via bcrypt)
+INSERT INTO users (id, role_id, employee_code, name, email, phone, password_hash, status) VALUES
+(1, 3, 'ADMIN-001', 'System Administrator', 'admin@bbu.edu.kh', '012345678', '$2a$10$w8LqUa245H4F3U7G8p2VYe1.c9vK8hGgT1lWqFm/x4j5Z6k7l8m9n', 'ACTIVE')
+ON CONFLICT (id) DO NOTHING;
+
+
+==== application.yml ====
+server:
+  port: 8080
+
+spring:
+  application:
+    name: smart-attendance-backend
+
+  datasource:
+    # កែប្រែឈ្មោះ host, port, db name ឬ password ឱ្យត្រូវតាមកុំព្យូទ័ររបស់មិត្ត
+    url: jdbc:postgresql://localhost:5432/smart_attendance_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# ការកំណត់សុវត្ថិភាព JWT Token
+application:
+  security:
+    jwt:
+      # Secret Key ប្រវែង 256-bit (Base64/Hex) សម្រាប់ HMAC-SHA256
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      # រយៈពេលសុពលភាព Token (24 ម៉ោង = 86,400,000 milliseconds)
+      expiration: 86400000
+

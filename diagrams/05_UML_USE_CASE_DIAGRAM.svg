@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 950" width="100%" height="100%" style="background:#ffffff; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="uc-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="headerGradUC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091e3a"/>
+      <stop offset="50%" stop-color="#163e72"/>
+      <stop offset="100%" stop-color="#1e5296"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="40" y="25" width="1220" height="75" rx="14" fill="url(#headerGradUC)" filter="url(#uc-shadow)"/>
+  <text x="650" y="58" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">UML USE CASE DIAGRAM — BBU SMART ATTENDANCE SYSTEM</text>
+  <text x="650" y="83" text-anchor="middle" fill="#93c5fd" font-size="13">ដ្យាក្រាម Use Case ស្តង់ដាររវាងតួអង្គទាំង ៣ (Student, Teacher, Admin) — BBU IT THESIS</text>
+
+  <!-- System Boundary Box -->
+  <rect x="360" y="130" width="580" height="730" rx="16" fill="#f8fafc" stroke="#2563eb" stroke-width="2.5" filter="url(#uc-shadow)"/>
+  <rect x="360" y="130" width="580" height="38" rx="16" fill="#eff6ff"/>
+  <text x="650" y="155" text-anchor="middle" fill="#1e40af" font-size="14" font-weight="bold">SMART ATTENDANCE SYSTEM BOUNDARY</text>
+
+  <!-- ACTOR 1: STUDENT (Left) -->
+  <g transform="translate(120, 310)">
+    <circle cx="50" cy="40" r="24" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+    <line x1="50" y1="64" x2="50" y2="125" stroke="#0284c7" stroke-width="3"/>
+    <line x1="15" y1="85" x2="85" y2="85" stroke="#0284c7" stroke-width="3"/>
+    <line x1="50" y1="125" x2="20" y2="175" stroke="#0284c7" stroke-width="3"/>
+    <line x1="50" y1="125" x2="80" y2="175" stroke="#0284c7" stroke-width="3"/>
+    <text x="50" y="205" text-anchor="middle" fill="#0c4a6e" font-size="15" font-weight="bold">👨‍🎓 និស្សិត</text>
+    <text x="50" y="225" text-anchor="middle" fill="#0284c7" font-size="12">(Student)</text>
+  </g>
+
+  <!-- ACTOR 2: TEACHER (Right Top) -->
+  <g transform="translate(1080, 260)">
+    <circle cx="50" cy="40" r="24" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <line x1="50" y1="64" x2="50" y2="125" stroke="#16a34a" stroke-width="3"/>
+    <line x1="15" y1="85" x2="85" y2="85" stroke="#16a34a" stroke-width="3"/>
+    <line x1="50" y1="125" x2="20" y2="175" stroke="#16a34a" stroke-width="3"/>
+    <line x1="50" y1="125" x2="80" y2="175" stroke="#16a34a" stroke-width="3"/>
+    <text x="50" y="205" text-anchor="middle" fill="#14532d" font-size="15" font-weight="bold">👨‍🏫 សាស្ត្រាចារ្យ</text>
+    <text x="50" y="225" text-anchor="middle" fill="#16a34a" font-size="12">(Teacher)</text>
+  </g>
+
+  <!-- ACTOR 3: ADMIN (Right Bottom) -->
+  <g transform="translate(1080, 600)">
+    <circle cx="50" cy="40" r="24" fill="#f3e8ff" stroke="#7c3aed" stroke-width="2.5"/>
+    <line x1="50" y1="64" x2="50" y2="125" stroke="#7c3aed" stroke-width="3"/>
+    <line x1="15" y1="85" x2="85" y2="85" stroke="#7c3aed" stroke-width="3"/>
+    <line x1="50" y1="125" x2="20" y2="175" stroke="#7c3aed" stroke-width="3"/>
+    <line x1="50" y1="125" x2="80" y2="175" stroke="#7c3aed" stroke-width="3"/>
+    <text x="50" y="205" text-anchor="middle" fill="#4c1d95" font-size="15" font-weight="bold">🏛️ អ្នកគ្រប់គ្រង</text>
+    <text x="50" y="225" text-anchor="middle" fill="#7c3aed" font-size="12">(Admin)</text>
+  </g>
+
+  <!-- USE CASES (ELLIPSES) -->
+  <!-- UC 1: Login & Register Device -->
+  <g transform="translate(650, 210)">
+    <ellipse rx="150" ry="26" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="bold">Login &amp; Bind Device UUID</text>
+  </g>
+
+  <!-- UC 2: Scan Dynamic QR -->
+  <g transform="translate(650, 275)">
+    <ellipse rx="150" ry="26" fill="#f0f9ff" stroke="#0284c7" stroke-width="2.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#0369a1" font-size="12.5" font-weight="bold">Scan Dynamic QR Code</text>
+  </g>
+
+  <!-- UC 3: Multi-Factor Verification Engine -->
+  <g transform="translate(650, 345)">
+    <ellipse rx="155" ry="28" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+    <text x="0" y="4" text-anchor="middle" fill="#0c4a6e" font-size="12.5" font-weight="bold">Verify Multi-Factor Physical Presence</text>
+  </g>
+
+  <!-- UC 4: View Attendance History -->
+  <g transform="translate(650, 415)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#1e40af" font-size="12">View Attendance History &amp; Summary</text>
+  </g>
+
+  <!-- UC 5: Submit Leave Request -->
+  <g transform="translate(650, 480)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#ec4899" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#be185d" font-size="12">Submit Leave Request with Document</text>
+  </g>
+
+  <!-- UC 6: Open Attendance Session -->
+  <g transform="translate(650, 550)">
+    <ellipse rx="150" ry="26" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#14532d" font-size="12.5" font-weight="bold">Open Session &amp; Stream Dynamic QR</text>
+  </g>
+
+  <!-- UC 7: Monitor Real-Time Roster -->
+  <g transform="translate(650, 620)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#15803d" font-size="12">Monitor Real-Time Roster &amp; Alerts</text>
+  </g>
+
+  <!-- UC 8: Manual Override -->
+  <g transform="translate(650, 685)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#15803d" font-size="12">Manual Attendance Status Override</text>
+  </g>
+
+  <!-- UC 9: Manage Users & Geofences -->
+  <g transform="translate(650, 755)">
+    <ellipse rx="150" ry="25" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#6d28d9" font-size="12">Manage Users, Classes &amp; Geofences</text>
+  </g>
+
+  <!-- UC 10: View Audit Logs & Fraud Reports -->
+  <g transform="translate(650, 820)">
+    <ellipse rx="150" ry="25" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#6d28d9" font-size="12">View Security Audit &amp; Fraud Reports</text>
+  </g>
+
+  <!-- ASSOCIATION LINES -->
+  <!-- Student Lines -->
+  <line x1="200" y1="380" x2="500" y2="210" stroke="#0284c7" stroke-width="1.8"/>
+  <line x1="200" y1="380" x2="500" y2="275" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="200" y1="380" x2="500" y2="415" stroke="#0284c7" stroke-width="1.8"/>
+  <line x1="200" y1="380" x2="500" y2="480" stroke="#0284c7" stroke-width="1.8"/>
+
+  <!-- <<include>> Scan QR -> Verify Presence -->
+  <path d="M 650 301 L 650 317" fill="none" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3"/>
+  <text x="685" y="312" fill="#0369a1" font-size="10" font-weight="bold">&lt;&lt;include&gt;&gt;</text>
+
+  <!-- Teacher Lines -->
+  <line x1="1080" y1="330" x2="800" y2="210" stroke="#16a34a" stroke-width="1.8"/>
+  <line x1="1080" y1="330" x2="800" y2="550" stroke="#16a34a" stroke-width="2.5"/>
+  <line x1="1080" y1="330" x2="800" y2="620" stroke="#16a34a" stroke-width="1.8"/>
+  <line x1="1080" y1="330" x2="800" y2="685" stroke="#16a34a" stroke-width="1.8"/>
+  <line x1="1080" y1="330" x2="800" y2="480" stroke="#16a34a" stroke-width="1.8"/>
+
+  <!-- Admin Lines -->
+  <line x1="1080" y1="670" x2="800" y2="210" stroke="#7c3aed" stroke-width="1.8"/>
+  <line x1="1080" y1="670" x2="800" y2="755" stroke="#7c3aed" stroke-width="2.2"/>
+  <line x1="1080" y1="670" x2="800" y2="820" stroke="#7c3aed" stroke-width="2.2"/>
+
+  <!-- Footer Information -->
+  <rect x="40" y="875" width="1220" height="60" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="60" y="900" fill="#0f172a" font-size="12" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (UML Use Case Defense Note):</text>
+  <text x="60" y="920" fill="#475569" font-size="11">ដ្យាក្រាម Use Case បង្ហាញតួនាទីសិទ្ធិ (Role-Based Access) យ៉ាងច្បាស់លាស់៖ និស្សិត (Mobile Scan), សាស្ត្រាចារ្យ (Session Control &amp; Live Monitor), និង Admin (System Governance)។</text>
+</svg>

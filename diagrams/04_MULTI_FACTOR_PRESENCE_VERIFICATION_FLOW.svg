@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 950" width="100%" height="100%" style="background:#0b1120; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="p-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="parr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="40" y="25" width="1320" height="75" rx="14" fill="#1e293b" stroke="#334155" stroke-width="2" filter="url(#p-shadow)"/>
+  <text x="700" y="58" text-anchor="middle" fill="#38bdf8" font-size="20" font-weight="bold">MULTI-FACTOR PHYSICAL PRESENCE VERIFICATION PIPELINE</text>
+  <text x="700" y="83" text-anchor="middle" fill="#94a3b8" font-size="13">ដំណើរការផ្ទៀងផ្ទាត់ ៧ ស្រទាប់ដើម្បីទប់ស្កាត់ការកត់វត្តមានជំនួសគ្នា ១០០% — BBU IT THESIS</text>
+
+  <!-- Step 0: Mobile Client Sensor Capture (Left Box) -->
+  <g transform="translate(60, 140)" filter="url(#p-shadow)">
+    <rect width="260" height="690" rx="14" fill="#1e293b" stroke="#0284c7" stroke-width="2"/>
+    <rect width="260" height="42" rx="14" fill="#0284c7"/>
+    <rect y="26" width="260" height="16" fill="#0284c7"/>
+    <text x="130" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">📱 STUDENT MOBILE APP</text>
+    
+    <g transform="translate(20, 65)">
+      <text x="0" y="20" fill="#38bdf8" font-size="12" font-weight="bold">1. Camera Scanner</text>
+      <text x="0" y="40" fill="#94a3b8" font-size="10.5">Captures Dynamic QR</text>
+
+      <text x="0" y="85" fill="#38bdf8" font-size="12" font-weight="bold">2. GPS Engine</text>
+      <text x="0" y="105" fill="#94a3b8" font-size="10.5">Latitude, Longitude</text>
+      <text x="0" y="123" fill="#64748b" font-size="9.5">Accuracy: ±5-10 meters</text>
+
+      <text x="0" y="168" fill="#38bdf8" font-size="12" font-weight="bold">3. BLE Scanner</text>
+      <text x="0" y="188" fill="#94a3b8" font-size="10.5">Room Beacon UUID</text>
+      <text x="0" y="206" fill="#64748b" font-size="9.5">Signal: RSSI ≥ -75 dBm</text>
+
+      <text x="0" y="251" fill="#38bdf8" font-size="12" font-weight="bold">4. Biometrics</text>
+      <text x="0" y="271" fill="#94a3b8" font-size="10.5">FaceID / Fingerprint</text>
+      <text x="0" y="289" fill="#64748b" font-size="9.5">Crypto signature pass</text>
+
+      <text x="0" y="334" fill="#38bdf8" font-size="12" font-weight="bold">5. Device Hardware</text>
+      <text x="0" y="354" fill="#94a3b8" font-size="10.5">Hardware UUID Binding</text>
+
+      <rect x="0" y="400" width="220" height="90" rx="8" fill="#0f172a" stroke="#0ea5e9" stroke-width="1.2"/>
+      <text x="110" y="425" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">Payload Construction</text>
+      <text x="110" y="445" text-anchor="middle" fill="#94a3b8" font-size="9.5">HMAC-SHA256 Signed</text>
+      <text x="110" y="465" text-anchor="middle" fill="#64748b" font-size="9">{qr, gps, ble, bio, uuid}</text>
+
+      <rect x="0" y="520" width="220" height="70" rx="8" fill="#0284c7"/>
+      <text x="110" y="548" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">POST /api/attendance</text>
+      <text x="110" y="568" text-anchor="middle" fill="#e0f2fe" font-size="10">HTTPS Payload Dispatch 🚀</text>
+    </g>
+  </g>
+
+  <!-- Arrow from Phone to Pipeline -->
+  <path d="M 320 480 L 410 480" fill="none" stroke="#38bdf8" stroke-width="3" marker-end="url(#parr)"/>
+  <text x="365" y="470" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">JSON</text>
+
+  <!-- 7 PIPELINE STAGES IN BACKEND (Center Container) -->
+  <g transform="translate(420, 140)" filter="url(#p-shadow)">
+    <rect width="570" height="690" rx="14" fill="#0f172a" stroke="#1e3a8a" stroke-width="2"/>
+    <rect width="570" height="42" rx="14" fill="#1e3a8a"/>
+    <rect y="26" width="570" height="16" fill="#1e3a8a"/>
+    <text x="285" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">⚙️ SPRING BOOT VERIFICATION PIPELINE (7 STEPS)</text>
+
+    <!-- STEP 1: JWT & DEVICE UUID BINDING -->
+    <g transform="translate(25, 60)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#2563eb"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">1</text>
+      <text x="70" y="28" fill="#38bdf8" font-size="12.5" font-weight="bold">ស្រទាប់ទី ១: ផ្ទៀងផ្ទាត់ JWT Token &amp; ចង Device UUID</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ពិនិត្យថាទូរសព្ទស្កេន ត្រូវគ្នានឹង UUID ដែលបានចុះឈ្មោះក្នុងតារាង devices ឬអត់ (Anti-Account Sharing)</text>
+    </g>
+
+    <!-- STEP 2: SESSION & CLASS ACTIVE CHECK -->
+    <g transform="translate(25, 140)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#2563eb"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">2</text>
+      <text x="70" y="28" fill="#38bdf8" font-size="12.5" font-weight="bold">ស្រទាប់ទី ២: ពិនិត្យស្ថានភាព Session &amp; កាលវិភាគ (Active Session)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">វគ្គសិក្សាកំពុងដំណើរការ (status = 'ACTIVE') ហើយនិស្សិតមានឈ្មោះក្នុង enrollment នៃមុខវិជ្ជានោះ</text>
+    </g>
+
+    <!-- STEP 3: DYNAMIC QR SALT & TIME TOLERANCE -->
+    <g transform="translate(25, 220)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#d97706"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">3</text>
+      <text x="70" y="28" fill="#fbbf24" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៣: សុពលភាព Dynamic QR Code Salt (15 Seconds)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">HMAC Hash ត្រូវតែ match នឹង QR Salt បច្ចុប្បន្ន (ការពារការថតរូប QR បញ្ជូនតាម Telegram)</text>
+    </g>
+
+    <!-- STEP 4: GEOFENCE HAVERSINE FORMULA -->
+    <g transform="translate(25, 300)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#059669"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">4</text>
+      <text x="70" y="28" fill="#34d399" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៤: គណនាចម្ងាយ GPS Geofencing (Haversine Formula)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ចម្ងាយរវាងនិស្សិត និងកណ្តាលបន្ទប់រៀនត្រូវតែ ≤ 15 ម៉ែត្រ (ការពារការស្កេនពីក្រៅបន្ទប់)</text>
+    </g>
+
+    <!-- STEP 5: BLE BEACON PROXIMITY RSSI -->
+    <g transform="translate(25, 380)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#059669"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">5</text>
+      <text x="70" y="28" fill="#34d399" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៥: ផ្ទៀងផ្ទាត់រលកសញ្ញា BLE Beacon (RSSI Proximity)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ស្កេនឃើញ UUID ឧបករណ៍ Beacon ក្នុងបន្ទប់រៀនផ្ទាល់ដោយមានកម្រិត RSSI ≥ -75 dBm</text>
+    </g>
+
+    <!-- STEP 6: BIOMETRIC CRYPTOGRAPHIC PROOF -->
+    <g transform="translate(25, 460)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#7c3aed"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">6</text>
+      <text x="70" y="28" fill="#c084fc" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៦: ផ្ទៀងផ្ទាត់ Biometric Cryptographic Proof</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ពិនិត្យហត្ថលេខាឌីជីថលសុវត្ថិភាព (Android KeyStore / iOS Secure Enclave) នៃ FaceID</text>
+    </g>
+
+    <!-- STEP 7: DUP CHECK & ANTI-SPOOFING -->
+    <g transform="translate(25, 540)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#0891b2"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">7</text>
+      <text x="70" y="28" fill="#67e8f9" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៧: ពិនិត្យស្ទួន (Duplicate Check) &amp; Mock Location Detection</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ធានាថាមិនទាន់ចុះវត្តមានក្នុងវគ្គនេះម្តងទៀត និងគ្មាន Mock Location/VPN បន្លំឡើយ</text>
+    </g>
+
+    <text x="285" y="650" text-anchor="middle" fill="#94a3b8" font-size="11">ចំណាំ៖ ប្រសិនបើឆ្លងកាត់គ្រប់ ៧ ស្រទាប់ = SUCCESS | ប្រសិនបើធ្លាក់ត្រឹម ១ ស្រទាប់ = REJECT</text>
+  </g>
+
+  <!-- Output Decision Branches (Right Side) -->
+  <!-- Success Branch (Green) -->
+  <g transform="translate(1060, 240)" filter="url(#p-shadow)">
+    <rect width="280" height="180" rx="14" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/>
+    <text x="140" y="38" text-anchor="middle" fill="#34d399" font-size="15" font-weight="bold">✅ ATTENDANCE SUCCESS</text>
+    <line x1="20" y1="52" x2="260" y2="52" stroke="#059669" stroke-width="1.5"/>
+    <text x="25" y="80" fill="#a7f3d0" font-size="11.5">• Status: <b>PRESENT</b> ឬ <b>LATE</b></text>
+    <text x="25" y="105" fill="#a7f3d0" font-size="11">• Save to: <b>attendance_records</b></text>
+    <text x="25" y="130" fill="#a7f3d0" font-size="11">• Log to: <b>check_in_verifications</b></text>
+    <text x="25" y="155" fill="#6ee7b7" font-size="10.5">🔔 Push WebSocket Alert to Teacher</text>
+  </g>
+
+  <!-- Failure Branch (Red) -->
+  <g transform="translate(1060, 500)" filter="url(#p-shadow)">
+    <rect width="280" height="190" rx="14" fill="#4c0519" stroke="#f43f5e" stroke-width="2.5"/>
+    <text x="140" y="38" text-anchor="middle" fill="#fb7185" font-size="15" font-weight="bold">❌ REJECTED &amp; FLAGGED</text>
+    <line x1="20" y1="52" x2="260" y2="52" stroke="#be123c" stroke-width="1.5"/>
+    <text x="25" y="80" fill="#fecdd3" font-size="11.5">• Status: <b>FRAUD_ATTEMPT</b></text>
+    <text x="25" y="105" fill="#fecdd3" font-size="11">• Log to: <b>fraud_audit_logs</b></text>
+    <text x="25" y="130" fill="#fecdd3" font-size="11">• Reason: GPS out of range / Salt Exp</text>
+    <text x="25" y="152" fill="#fecdd3" font-size="11">• Risk Score: +40</text>
+    <text x="25" y="172" fill="#fda4af" font-size="10.5">⚠️ Alert Admin if risk &gt; 70</text>
+  </g>
+
+  <!-- Arrows to Success/Failure -->
+  <path d="M 990 330 L 1060 330" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#parr)"/>
+  <path d="M 990 595 L 1060 595" fill="none" stroke="#f43f5e" stroke-width="3" marker-end="url(#parr)"/>
+
+  <!-- Footer Information -->
+  <rect x="40" y="850" width="1320" height="80" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="880" fill="#38bdf8" font-size="12" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (Defense Note on Security Pipeline):</text>
+  <text x="60" y="904" fill="#cbd5e1" font-size="11">ការរួមបញ្ចូលគ្នារវាងកត្តាទាំង ៧ ធ្វើឱ្យប្រព័ន្ធបិទផ្លូវកេងបន្លំ ១០០%៖ Dynamic QR ទប់ស្កាត់ការថតរូបផ្ញើតាមឆាត, Device UUID ទប់ស្កាត់ការ Log គណនីលើម៉ាស៊ីនតែមួយ, GPS + BLE ធានាវត្តមានជាក់ស្តែងក្នុងបន្ទប់, និង Biometric ធានាថាសាមីខ្លួនផ្ទាល់ជាអ្នកកាន់ទូរសព្ទ។</text>
+</svg>

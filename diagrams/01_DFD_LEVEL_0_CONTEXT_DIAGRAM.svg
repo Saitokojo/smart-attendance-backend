@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" style="background:#ffffff; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="shadow0" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="headerGrad0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091e3a"/>
+      <stop offset="50%" stop-color="#163e72"/>
+      <stop offset="100%" stop-color="#1e5296"/>
+    </linearGradient>
+    <linearGradient id="procGrad0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+    <marker id="arr0-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arr0-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arr0-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Header Banner -->
+  <rect x="40" y="30" width="1120" height="75" rx="14" fill="url(#headerGrad0)" filter="url(#shadow0)"/>
+  <text x="600" y="62" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold" letter-spacing="0.5">DATA FLOW DIAGRAM (DFD) — LEVEL 0: CONTEXT DIAGRAM</text>
+  <text x="600" y="88" text-anchor="middle" fill="#93c5fd" font-size="13">ប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ និងមានសុវត្ថិភាពខ្ពស់ (Smart &amp; Secure University Attendance System) — BBU IT THESIS</text>
+
+  <!-- Process 0.0 (Center Circle) -->
+  <g transform="translate(600, 430)" filter="url(#shadow0)">
+    <circle r="120" fill="#dbeafe" opacity="0.6"/>
+    <circle r="110" fill="url(#procGrad0)" stroke="#1d4ed8" stroke-width="3.5"/>
+    <line x1="-95" y1="-45" x2="95" y2="-45" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <rect x="-40" y="-62" width="80" height="24" rx="12" fill="#1e40af"/>
+    <text x="0" y="-46" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">PROCESS 0.0</text>
+    <text x="0" y="-12" text-anchor="middle" fill="#0f172a" font-size="16" font-weight="bold">SMART ATTENDANCE</text>
+    <text x="0" y="10" text-anchor="middle" fill="#0f172a" font-size="16" font-weight="bold">SYSTEM</text>
+    <text x="0" y="38" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="600">ប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ</text>
+    <text x="0" y="58" text-anchor="middle" fill="#64748b" font-size="10.5">(Multi-Factor Presence Verification)</text>
+  </g>
+
+  <!-- ================= ENTITY 1: STUDENT (LEFT) ================= -->
+  <g transform="translate(70, 310)" filter="url(#shadow0)">
+    <rect width="210" height="240" rx="16" fill="#f0f9ff" stroke="#0284c7" stroke-width="2.5"/>
+    <rect width="210" height="42" rx="16" fill="#0284c7"/>
+    <rect y="26" width="210" height="16" fill="#0284c7"/>
+    <text x="105" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">EXTERNAL ENTITY</text>
+    <circle cx="105" cy="85" r="26" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <text x="105" y="93" text-anchor="middle" fill="#0284c7" font-size="24">👨‍🎓</text>
+    <text x="105" y="135" text-anchor="middle" fill="#0c4a6e" font-size="16" font-weight="bold">និស្សិត (STUDENT)</text>
+    <text x="105" y="156" text-anchor="middle" fill="#0369a1" font-size="11.5" font-weight="600">អ្នកប្រើប្រាស់ Mobile App</text>
+    <line x1="20" y1="170" x2="190" y2="170" stroke="#bae6fd" stroke-width="1.5"/>
+    <text x="105" y="190" text-anchor="middle" fill="#475569" font-size="10">• ស្កេន Dynamic QR</text>
+    <text x="105" y="208" text-anchor="middle" fill="#475569" font-size="10">• បញ្ជូន GPS + Biometric</text>
+    <text x="105" y="226" text-anchor="middle" fill="#475569" font-size="10">• ស្នើសុំច្បាប់ &amp; មើលវត្តមាន</text>
+  </g>
+
+  <!-- ================= ENTITY 2: TEACHER (RIGHT) ================= -->
+  <g transform="translate(920, 310)" filter="url(#shadow0)">
+    <rect width="210" height="240" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <rect width="210" height="42" rx="16" fill="#16a34a"/>
+    <rect y="26" width="210" height="16" fill="#16a34a"/>
+    <text x="105" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">EXTERNAL ENTITY</text>
+    <circle cx="105" cy="85" r="26" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="105" y="93" text-anchor="middle" fill="#16a34a" font-size="24">👨‍🏫</text>
+    <text x="105" y="135" text-anchor="middle" fill="#14532d" font-size="16" font-weight="bold">សាស្ត្រាចារ្យ (TEACHER)</text>
+    <text x="105" y="156" text-anchor="middle" fill="#15803d" font-size="11.5" font-weight="600">អ្នកប្រើប្រាស់ Web / Tablet</text>
+    <line x1="20" y1="170" x2="190" y2="170" stroke="#bbf7d0" stroke-width="1.5"/>
+    <text x="105" y="190" text-anchor="middle" fill="#475569" font-size="10">• បញ្ឆេះ Session &amp; QR Salt</text>
+    <text x="105" y="208" text-anchor="middle" fill="#475569" font-size="10">• ពិនិត្យវត្តមានផ្ទាល់ (Real-time)</text>
+    <text x="105" y="226" text-anchor="middle" fill="#475569" font-size="10">• អនុម័តច្បាប់ &amp; Override</text>
+  </g>
+
+  <!-- ================= ENTITY 3: ADMIN (TOP CENTER) ================= -->
+  <g transform="translate(470, 135)" filter="url(#shadow0)">
+    <rect width="260" height="110" rx="16" fill="#faf5ff" stroke="#7c3aed" stroke-width="2.5"/>
+    <rect width="260" height="34" rx="16" fill="#7c3aed"/>
+    <rect y="20" width="260" height="14" fill="#7c3aed"/>
+    <text x="130" y="22" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">EXTERNAL ENTITY</text>
+    <text x="130" y="58" text-anchor="middle" fill="#4c1d95" font-size="15" font-weight="bold">🏛️ អ្នកគ្រប់គ្រងប្រព័ន្ធ (ADMIN)</text>
+    <text x="130" y="78" text-anchor="middle" fill="#6d28d9" font-size="11">ការិយាល័យសិក្សា / Academic Affairs</text>
+    <text x="130" y="98" text-anchor="middle" fill="#475569" font-size="9.5">គ្រប់គ្រងគណនី, បន្ទប់, Geofence &amp; Audit Logs</text>
+  </g>
+
+  <!-- ================= DATA FLOWS: STUDENT <-> SYSTEM ================= -->
+  <!-- Inflow: Student -> System -->
+  <path d="M 280 390 L 485 390" fill="none" stroke="#0284c7" stroke-width="2.2" marker-end="url(#arr0-blue)"/>
+  <g transform="translate(382, 355)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#0369a1" font-size="10.5" font-weight="bold">១. Login &amp; Device UUID</text>
+    <text x="0" y="12" text-anchor="middle" fill="#0c4a6e" font-size="9.5">២. QR Payload + GPS + BLE + Bio</text>
+  </g>
+
+  <!-- Outflow: System -> Student -->
+  <path d="M 485 470 L 280 470" fill="none" stroke="#0284c7" stroke-width="2.2" marker-end="url(#arr0-blue)"/>
+  <g transform="translate(382, 505)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#0369a1" font-size="10.5" font-weight="bold">១. លទ្ធផលវត្តមាន (Present/Late)</text>
+    <text x="0" y="12" text-anchor="middle" fill="#0c4a6e" font-size="9.5">២. ប្រវត្តិចុះវត្តមាន &amp; ដំណឹងច្បាប់</text>
+  </g>
+
+  <!-- ================= DATA FLOWS: TEACHER <-> SYSTEM ================= -->
+  <!-- Inflow: Teacher -> System -->
+  <path d="M 920 390 L 715 390" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arr0-green)"/>
+  <g transform="translate(818, 355)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#15803d" font-size="10.5" font-weight="bold">១. បញ្ឆេះ Session &amp; QR Salt</text>
+    <text x="0" y="12" text-anchor="middle" fill="#14532d" font-size="9.5">២. កែសម្រួលវត្តមាន (Override)</text>
+  </g>
+
+  <!-- Outflow: System -> Teacher -->
+  <path d="M 715 470 L 920 470" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arr0-green)"/>
+  <g transform="translate(818, 505)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#15803d" font-size="10.5" font-weight="bold">១. Dynamic QR Code (15s Refresh)</text>
+    <text x="0" y="12" text-anchor="middle" fill="#14532d" font-size="9.5">២. Real-time Roster &amp; របាយការណ៍</text>
+  </g>
+
+  <!-- ================= DATA FLOWS: ADMIN <-> SYSTEM ================= -->
+  <!-- Inflow: Admin -> System -->
+  <path d="M 560 245 L 560 325" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#arr0-purple)"/>
+  <g transform="translate(485, 285)">
+    <rect x="-70" y="-18" width="140" height="36" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-3" text-anchor="middle" fill="#6d28d9" font-size="9.5" font-weight="bold">គណនី, តួនាទី,</text>
+    <text x="0" y="11" text-anchor="middle" fill="#4c1d95" font-size="9.5">បន្ទប់ &amp; Geofences</text>
+  </g>
+
+  <!-- Outflow: System -> Admin -->
+  <path d="M 640 325 L 640 245" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#arr0-purple)"/>
+  <g transform="translate(715, 285)">
+    <rect x="-70" y="-18" width="140" height="36" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-3" text-anchor="middle" fill="#6d28d9" font-size="9.5" font-weight="bold">Audit Logs, ស្ថិតិ</text>
+    <text x="0" y="11" text-anchor="middle" fill="#4c1d95" font-size="9.5">&amp; របាយការណ៍ទូទៅ</text>
+  </g>
+
+  <!-- Footer Information -->
+  <rect x="40" y="750" width="1120" height="70" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="60" y="776" fill="#0f172a" font-size="12" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (Defense Note):</text>
+  <text x="60" y="798" fill="#475569" font-size="11">DFD Context Diagram (Level 0) បង្ហាញព្រំដែនប្រព័ន្ធទាំងមូល និងអន្តរកម្មរវាងតួអង្គទាំង ៣ ជាមួយប្រព័ន្ធកណ្តាល។ Process 0.0 នឹងត្រូវបំបែកជា ៦ Sub-processes ក្នុង DFD Level 1 (Auth, Class, Session, Verification, Leave, Audit)។</text>
+</svg>

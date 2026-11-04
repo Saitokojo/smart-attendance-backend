@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ផ្ទាំងទស្សនាដ្យាក្រាមប្រព័ន្ធវត្តមានឆ្លាតវៃ — BBU IT Sarna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kantumruy+Pro:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-100: #f1f5f9;
+      --emerald-600: #059669;
+      --rose-600: #e11d48;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Kantumruy Pro', 'Battambang', 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    body {
+      background: #090d16;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 18px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .team-badge {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab-bar {
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      padding: 10px 24px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 9px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      border-color: #64748b;
+    }
+    .tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #3b82f6;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+    .tab-badge {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+    }
+    .main-container {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 1700px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      gap: 12px;
+    }
+    .diagram-info h2 {
+      font-size: 17px;
+      color: #ffffff;
+      margin-bottom: 3px;
+    }
+    .diagram-info p {
+      font-size: 12.5px;
+      color: #94a3b8;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: none;
+      text-decoration: none;
+    }
+    .btn-png {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+    }
+    .btn-png:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+    }
+    .btn-svg {
+      background: #2563eb;
+      color: #ffffff;
+    }
+    .btn-svg:hover {
+      background: #1d4ed8;
+    }
+    .btn-tool {
+      background: #334155;
+      color: #e2e8f0;
+    }
+    .btn-tool:hover {
+      background: #475569;
+    }
+    .viewer-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+    .svg-wrapper {
+      padding: 24px;
+      background: #0b1120;
+      overflow: auto;
+      max-height: 75vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .svg-wrapper svg {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+    .defense-card {
+      background: #1e293b;
+      border-top: 1px solid #334155;
+      padding: 20px 24px;
+    }
+    .defense-card h3 {
+      font-size: 15px;
+      color: #38bdf8;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .defense-card ul {
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+    .defense-card li {
+      margin-bottom: 6px;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    footer {
+      background: #0f172a;
+      border-top: 1px solid #1e293b;
+      padding: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🎓</div>
+      <div>
+        <div class="brand-title">ស្ថាបត្យកម្មដ្យាក្រាមប្រព័ន្ធវត្តមានឆ្លាតវៃ — SYSTEM ARCHITECTURE</div>
+        <div class="brand-subtitle">Build Bright University (BBU) • Faculty of Science &amp; Technology • IT Major Sarna</div>
+      </div>
+    </div>
+    <div class="team-badge">
+      <span>👨‍💻 និស្សិត ខី វណ្ណារ៉ុង (Team Leader &amp; Architect)</span>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span>01. DFD Level 0</span>
+      <span class="tab-badge">Context</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span>02. DFD Level 1</span>
+      <span class="tab-badge">6 Processes</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span>03. ERD (Resitship)</span>
+      <span class="tab-badge">14 Tables</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span>04. 7-Factor Security</span>
+      <span class="tab-badge">Pipeline Flow</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(4)">
+      <span>05. UML Use Case</span>
+      <span class="tab-badge">Actors &amp; Cases</span>
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="main-container">
+
+    <!-- ================= TAB 0: DFD LEVEL 0 ================= -->
+    <div id="tab0" class="tab-content active">
+      <div class="action-bar">
+        <div class="diagram-info">
+          <h2>01. DATA FLOW DIAGRAM (DFD) — LEVEL 0: CONTEXT DIAGRAM</h2>
+          <p>ដ្យាក្រាមបង្ហាញព្រំដែនប្រព័ន្ធរួម អន្តរកម្មតួអង្គទាំង ៣ (Student, Teacher, Admin) ជាមួយ Process 0.0</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-png" onclick="downloadAsPNG('svg-dfd0', '01_DFD_LEVEL_0_CONTEXT_DIAGRAM.png')">
+            📥 Download High-Res PNG (300 DPI)
+          </button>
+          <a class="btn btn-svg" href="01_DFD_LEVEL_0_CONTEXT_DIAGRAM.svg" download="01_DFD_LEVEL_0_CONTEXT_DIAGRAM.svg">
+            💾 Download SVG
+          </a>
+          <button class="btn btn-tool" onclick="zoomIn('svg-dfd0')">🔍 +</button>
+          <button class="btn btn-tool" onclick="zoomOut('svg-dfd0')">🔍 -</button>
+          <button class="btn btn-tool" onclick="resetZoom('svg-dfd0')">↺ Reset</button>
+        </div>
+      </div>
+      <div class="viewer-card">
+        <div class="svg-wrapper" id="wrap-dfd0" style="background:#ffffff;">
+          <div id="svg-dfd0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%" style="background:#ffffff; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="shadow0" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="headerGrad0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091e3a"/>
+      <stop offset="50%" stop-color="#163e72"/>
+      <stop offset="100%" stop-color="#1e5296"/>
+    </linearGradient>
+    <linearGradient id="procGrad0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+    <marker id="arr0-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arr0-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arr0-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Header Banner -->
+  <rect x="40" y="30" width="1120" height="75" rx="14" fill="url(#headerGrad0)" filter="url(#shadow0)"/>
+  <text x="600" y="62" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold" letter-spacing="0.5">DATA FLOW DIAGRAM (DFD) — LEVEL 0: CONTEXT DIAGRAM</text>
+  <text x="600" y="88" text-anchor="middle" fill="#93c5fd" font-size="13">ប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ និងមានសុវត្ថិភាពខ្ពស់ (Smart &amp; Secure University Attendance System) — BBU IT THESIS</text>
+
+  <!-- Process 0.0 (Center Circle) -->
+  <g transform="translate(600, 430)" filter="url(#shadow0)">
+    <circle r="120" fill="#dbeafe" opacity="0.6"/>
+    <circle r="110" fill="url(#procGrad0)" stroke="#1d4ed8" stroke-width="3.5"/>
+    <line x1="-95" y1="-45" x2="95" y2="-45" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <rect x="-40" y="-62" width="80" height="24" rx="12" fill="#1e40af"/>
+    <text x="0" y="-46" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">PROCESS 0.0</text>
+    <text x="0" y="-12" text-anchor="middle" fill="#0f172a" font-size="16" font-weight="bold">SMART ATTENDANCE</text>
+    <text x="0" y="10" text-anchor="middle" fill="#0f172a" font-size="16" font-weight="bold">SYSTEM</text>
+    <text x="0" y="38" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="600">ប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ</text>
+    <text x="0" y="58" text-anchor="middle" fill="#64748b" font-size="10.5">(Multi-Factor Presence Verification)</text>
+  </g>
+
+  <!-- ================= ENTITY 1: STUDENT (LEFT) ================= -->
+  <g transform="translate(70, 310)" filter="url(#shadow0)">
+    <rect width="210" height="240" rx="16" fill="#f0f9ff" stroke="#0284c7" stroke-width="2.5"/>
+    <rect width="210" height="42" rx="16" fill="#0284c7"/>
+    <rect y="26" width="210" height="16" fill="#0284c7"/>
+    <text x="105" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">EXTERNAL ENTITY</text>
+    <circle cx="105" cy="85" r="26" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <text x="105" y="93" text-anchor="middle" fill="#0284c7" font-size="24">👨‍🎓</text>
+    <text x="105" y="135" text-anchor="middle" fill="#0c4a6e" font-size="16" font-weight="bold">និស្សិត (STUDENT)</text>
+    <text x="105" y="156" text-anchor="middle" fill="#0369a1" font-size="11.5" font-weight="600">អ្នកប្រើប្រាស់ Mobile App</text>
+    <line x1="20" y1="170" x2="190" y2="170" stroke="#bae6fd" stroke-width="1.5"/>
+    <text x="105" y="190" text-anchor="middle" fill="#475569" font-size="10">• ស្កេន Dynamic QR</text>
+    <text x="105" y="208" text-anchor="middle" fill="#475569" font-size="10">• បញ្ជូន GPS + Biometric</text>
+    <text x="105" y="226" text-anchor="middle" fill="#475569" font-size="10">• ស្នើសុំច្បាប់ &amp; មើលវត្តមាន</text>
+  </g>
+
+  <!-- ================= ENTITY 2: TEACHER (RIGHT) ================= -->
+  <g transform="translate(920, 310)" filter="url(#shadow0)">
+    <rect width="210" height="240" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <rect width="210" height="42" rx="16" fill="#16a34a"/>
+    <rect y="26" width="210" height="16" fill="#16a34a"/>
+    <text x="105" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">EXTERNAL ENTITY</text>
+    <circle cx="105" cy="85" r="26" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="105" y="93" text-anchor="middle" fill="#16a34a" font-size="24">👨‍🏫</text>
+    <text x="105" y="135" text-anchor="middle" fill="#14532d" font-size="16" font-weight="bold">សាស្ត្រាចារ្យ (TEACHER)</text>
+    <text x="105" y="156" text-anchor="middle" fill="#15803d" font-size="11.5" font-weight="600">អ្នកប្រើប្រាស់ Web / Tablet</text>
+    <line x1="20" y1="170" x2="190" y2="170" stroke="#bbf7d0" stroke-width="1.5"/>
+    <text x="105" y="190" text-anchor="middle" fill="#475569" font-size="10">• បញ្ឆេះ Session &amp; QR Salt</text>
+    <text x="105" y="208" text-anchor="middle" fill="#475569" font-size="10">• ពិនិត្យវត្តមានផ្ទាល់ (Real-time)</text>
+    <text x="105" y="226" text-anchor="middle" fill="#475569" font-size="10">• អនុម័តច្បាប់ &amp; Override</text>
+  </g>
+  <!-- ================= ENTITY 3: ADMIN (TOP CENTER) ================= -->
+  <g transform="translate(470, 135)" filter="url(#shadow0)">
+    <rect width="260" height="110" rx="16" fill="#faf5ff" stroke="#7c3aed" stroke-width="2.5"/>
+    <rect width="260" height="34" rx="16" fill="#7c3aed"/>
+    <rect y="20" width="260" height="14" fill="#7c3aed"/>
+    <text x="130" y="22" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">EXTERNAL ENTITY</text>
+    <text x="130" y="58" text-anchor="middle" fill="#4c1d95" font-size="15" font-weight="bold">🏛️ អ្នកគ្រប់គ្រងប្រព័ន្ធ (ADMIN)</text>
+    <text x="130" y="78" text-anchor="middle" fill="#6d28d9" font-size="11">ការិយាល័យសិក្សា / Academic Affairs</text>
+    <text x="130" y="98" text-anchor="middle" fill="#475569" font-size="9.5">គ្រប់គ្រងគណនី, បន្ទប់, Geofence &amp; Audit Logs</text>
+  </g>
+
+  <!-- ================= DATA FLOWS: STUDENT <-> SYSTEM ================= -->
+  <!-- Inflow: Student -> System -->
+  <path d="M 280 390 L 485 390" fill="none" stroke="#0284c7" stroke-width="2.2" marker-end="url(#arr0-blue)"/>
+  <g transform="translate(382, 355)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#0369a1" font-size="10.5" font-weight="bold">១. Login &amp; Device UUID</text>
+    <text x="0" y="12" text-anchor="middle" fill="#0c4a6e" font-size="9.5">២. QR Payload + GPS + BLE + Bio</text>
+  </g>
+
+  <!-- Outflow: System -> Student -->
+  <path d="M 485 470 L 280 470" fill="none" stroke="#0284c7" stroke-width="2.2" marker-end="url(#arr0-blue)"/>
+  <g transform="translate(382, 505)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#0369a1" font-size="10.5" font-weight="bold">១. លទ្ធផលវត្តមាន (Present/Late)</text>
+    <text x="0" y="12" text-anchor="middle" fill="#0c4a6e" font-size="9.5">២. ប្រវត្តិចុះវត្តមាន &amp; ដំណឹងច្បាប់</text>
+  </g>
+
+  <!-- ================= DATA FLOWS: TEACHER <-> SYSTEM ================= -->
+  <!-- Inflow: Teacher -> System -->
+  <path d="M 920 390 L 715 390" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arr0-green)"/>
+  <g transform="translate(818, 355)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#15803d" font-size="10.5" font-weight="bold">១. បញ្ឆេះ Session &amp; QR Salt</text>
+    <text x="0" y="12" text-anchor="middle" fill="#14532d" font-size="9.5">២. កែសម្រួលវត្តមាន (Override)</text>
+  </g>
+
+  <!-- Outflow: System -> Teacher -->
+  <path d="M 715 470 L 920 470" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arr0-green)"/>
+  <g transform="translate(818, 505)">
+    <rect x="-95" y="-22" width="190" height="44" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-6" text-anchor="middle" fill="#15803d" font-size="10.5" font-weight="bold">១. Dynamic QR Code (15s Refresh)</text>
+    <text x="0" y="12" text-anchor="middle" fill="#14532d" font-size="9.5">២. Real-time Roster &amp; របាយការណ៍</text>
+  </g>
+
+  <!-- ================= DATA FLOWS: ADMIN <-> SYSTEM ================= -->
+  <!-- Inflow: Admin -> System -->
+  <path d="M 560 245 L 560 325" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#arr0-purple)"/>
+  <g transform="translate(485, 285)">
+    <rect x="-70" y="-18" width="140" height="36" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-3" text-anchor="middle" fill="#6d28d9" font-size="9.5" font-weight="bold">គណនី, តួនាទី,</text>
+    <text x="0" y="11" text-anchor="middle" fill="#4c1d95" font-size="9.5">បន្ទប់ &amp; Geofences</text>
+  </g>
+
+  <!-- Outflow: System -> Admin -->
+  <path d="M 640 325 L 640 245" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#arr0-purple)"/>
+  <g transform="translate(715, 285)">
+    <rect x="-70" y="-18" width="140" height="36" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.2" filter="url(#shadow0)"/>
+    <text x="0" y="-3" text-anchor="middle" fill="#6d28d9" font-size="9.5" font-weight="bold">Audit Logs, ស្ថិតិ</text>
+    <text x="0" y="11" text-anchor="middle" fill="#4c1d95" font-size="9.5">&amp; របាយការណ៍ទូទៅ</text>
+  </g>
+
+  <!-- Footer Information -->
+  <rect x="40" y="750" width="1120" height="70" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="60" y="776" fill="#0f172a" font-size="12" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (Defense Note):</text>
+  <text x="60" y="798" fill="#475569" font-size="11">DFD Context Diagram (Level 0) បង្ហាញព្រំដែនប្រព័ន្ធទាំងមូល និងអន្តរកម្មរវាងតួអង្គទាំង ៣ ជាមួយប្រព័ន្ធកណ្តាល។ Process 0.0 នឹងត្រូវបំបែកជា ៦ Sub-processes ក្នុង DFD Level 1 (Auth, Class, Session, Verification, Leave, Audit)។</text>
+</svg></div>
+        </div>
+        <div class="defense-card">
+          <h3>🎤 ចំណុចគន្លឹះសម្រាប់ឆ្លើយការពារសារណា (Defense Key Points):</h3>
+          <ul>
+            <li><b>Context Boundary:</b> បង្ហាញព្រំដែនព័ទ្ធជុំវិញប្រព័ន្ធកណ្តាល Process 0.0 (Smart Attendance System)។</li>
+            <li><b>3 External Entities:</b> និស្សិត (Mobile App), សាស្ត្រាចារ្យ (Web / Tablet), និង Admin (Academic Office)។</li>
+            <li><b>Data Exchange:</b> និស្សិតបញ្ជូន Dynamic QR Payload, GPS, BLE &amp; Biometric Token រីឯប្រព័ន្ធបញ្ជូនត្រឡប់មកវិញនូវស្ថានភាពវត្តមាន (Present/Late) និងប្រវត្តិវត្តមាន។</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 1: DFD LEVEL 1 ================= -->
+    <div id="tab1" class="tab-content">
+      <div class="action-bar">
+        <div class="diagram-info">
+          <h2>02. DATA FLOW DIAGRAM (DFD) — LEVEL 1: PROCESS DECOMPOSITION</h2>
+          <p>ការបំបែក Process 0.0 ទៅជា ៦ Sub-processes និង ៦ Data Stores (D1 ដល់ D6) ត្រូវគ្នានឹង Spring Boot Services</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-png" onclick="downloadAsPNG('svg-dfd1', '02_DFD_LEVEL_1_PROCESS_DIAGRAM.png')">
+            📥 Download High-Res PNG (300 DPI)
+          </button>
+          <a class="btn btn-svg" href="02_DFD_LEVEL_1_PROCESS_DIAGRAM.svg" download="02_DFD_LEVEL_1_PROCESS_DIAGRAM.svg">
+            💾 Download SVG
+          </a>
+          <button class="btn btn-tool" onclick="zoomIn('svg-dfd1')">🔍 +</button>
+          <button class="btn btn-tool" onclick="zoomOut('svg-dfd1')">🔍 -</button>
+          <button class="btn btn-tool" onclick="resetZoom('svg-dfd1')">↺ Reset</button>
+        </div>
+      </div>
+      <div class="viewer-card">
+        <div class="svg-wrapper" id="wrap-dfd1" style="background:#ffffff;">
+          <div id="svg-dfd1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1150" width="100%" height="100%" style="background:#ffffff; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="shadow1" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="headerGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="pGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+    <marker id="arr1-b" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arr1-g" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arr1-p" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arr1-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Header Banner -->
+  <rect x="40" y="25" width="1520" height="75" rx="14" fill="url(#headerGrad1)" filter="url(#shadow1)"/>
+  <text x="800" y="58" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">DATA FLOW DIAGRAM (DFD) — LEVEL 1: DETAILED PROCESS DECOMPOSITION</text>
+  <text x="800" y="83" text-anchor="middle" fill="#93c5fd" font-size="13">ការបំបែក Process 0.0 ទៅជា ៦ ដំណើរការស្នូល និង ៦ ឃ្លាំងទិន្នន័យ (Data Stores) — BBU IT THESIS</text>
+
+  <!-- ================= EXTERNAL ENTITIES ================= -->
+  <!-- Entity: Student (Left Top) -->
+  <g transform="translate(50, 160)" filter="url(#shadow1)">
+    <rect width="180" height="150" rx="14" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+    <rect width="180" height="34" rx="14" fill="#0284c7"/>
+    <rect y="20" width="180" height="14" fill="#0284c7"/>
+    <text x="90" y="22" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">EXTERNAL ENTITY</text>
+    <text x="90" y="65" text-anchor="middle" fill="#0284c7" font-size="26">👨‍🎓</text>
+    <text x="90" y="98" text-anchor="middle" fill="#0c4a6e" font-size="14" font-weight="bold">និស្សិត (Student)</text>
+    <text x="90" y="118" text-anchor="middle" fill="#0369a1" font-size="10.5">Mobile App Client</text>
+    <text x="90" y="136" text-anchor="middle" fill="#64748b" font-size="9.5">QR, GPS, BLE, Biometric</text>
+  </g>
+
+  <!-- Entity: Teacher (Right Top) -->
+  <g transform="translate(1370, 160)" filter="url(#shadow1)">
+    <rect width="180" height="150" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <rect width="180" height="34" rx="14" fill="#16a34a"/>
+    <rect y="20" width="180" height="14" fill="#16a34a"/>
+    <text x="90" y="22" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">EXTERNAL ENTITY</text>
+    <text x="90" y="65" text-anchor="middle" fill="#16a34a" font-size="26">👨‍🏫</text>
+    <text x="90" y="98" text-anchor="middle" fill="#14532d" font-size="14" font-weight="bold">សាស្ត្រាចារ្យ (Teacher)</text>
+    <text x="90" y="118" text-anchor="middle" fill="#15803d" font-size="10.5">Web Portal / Tablet</text>
+    <text x="90" y="136" text-anchor="middle" fill="#64748b" font-size="9.5">Session, Dynamic QR, Roster</text>
+  </g>
+
+  <!-- Entity: Admin (Top Center) -->
+  <g transform="translate(710, 130)" filter="url(#shadow1)">
+    <rect width="200" height="90" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="2"/>
+    <rect width="200" height="28" rx="12" fill="#7c3aed"/>
+    <rect y="16" width="200" height="12" fill="#7c3aed"/>
+    <text x="100" y="18" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">EXTERNAL ENTITY</text>
+    <text x="100" y="52" text-anchor="middle" fill="#4c1d95" font-size="13" font-weight="bold">🏛️ ADMIN (ការិយាល័យសិក្សា)</text>
+    <text x="100" y="74" text-anchor="middle" fill="#6d28d9" font-size="10">System Admin &amp; Registrar</text>
+  </g>
+
+  <!-- ================= 6 CORE PROCESSES ================= -->
+  <!-- PROCESS 1.0: AUTH & DEVICE BINDING -->
+  <g transform="translate(320, 240)" filter="url(#shadow1)">
+    <circle r="65" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="0" y="-30" text-anchor="middle" fill="#1e40af" font-size="11" font-weight="bold">1.0</text>
+    <line x1="-50" y1="-20" x2="50" y2="-20" stroke="#bfdbfe" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">AUTH &amp; DEVICE</text>
+    <text x="0" y="15" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">BINDING</text>
+    <text x="0" y="34" text-anchor="middle" fill="#2563eb" font-size="9.5">ផ្ទៀងផ្ទាត់គណនី</text>
+    <text x="0" y="48" text-anchor="middle" fill="#64748b" font-size="8.5">&amp; ចង UUID ម៉ាស៊ីន</text>
+  </g>
+
+  <!-- PROCESS 2.0: ACADEMIC & CLASS MANAGEMENT -->
+  <g transform="translate(710, 290)" filter="url(#shadow1)">
+    <circle r="65" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="0" y="-30" text-anchor="middle" fill="#1e40af" font-size="11" font-weight="bold">2.0</text>
+    <line x1="-50" y1="-20" x2="50" y2="-20" stroke="#bfdbfe" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">ACADEMIC &amp;</text>
+    <text x="0" y="15" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">CLASS CONFIG</text>
+    <text x="0" y="34" text-anchor="middle" fill="#2563eb" font-size="9.5">គ្រប់គ្រងថ្នាក់,</text>
+    <text x="0" y="48" text-anchor="middle" fill="#64748b" font-size="8.5">បន្ទប់ &amp; Geofence</text>
+  </g>
+
+  <!-- PROCESS 3.0: SESSION & DYNAMIC QR -->
+  <g transform="translate(1100, 240)" filter="url(#shadow1)">
+    <circle r="65" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="0" y="-30" text-anchor="middle" fill="#1e40af" font-size="11" font-weight="bold">3.0</text>
+    <line x1="-50" y1="-20" x2="50" y2="-20" stroke="#bfdbfe" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">DYNAMIC QR</text>
+    <text x="0" y="15" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">GENERATOR</text>
+    <text x="0" y="34" text-anchor="middle" fill="#2563eb" font-size="9.5">បង្កើត Session &amp;</text>
+    <text x="0" y="48" text-anchor="middle" fill="#64748b" font-size="8.5">បង្វិល QR 15 វិនាទី</text>
+  </g>
+
+  <!-- PROCESS 4.0: MULTI-FACTOR VERIFICATION ENGINE (Center Big Process) -->
+  <g transform="translate(620, 570)" filter="url(#shadow1)">
+    <circle r="85" fill="#f0f9ff" stroke="#0284c7" stroke-width="3.5"/>
+    <text x="0" y="-45" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">4.0</text>
+    <line x1="-65" y1="-32" x2="65" y2="-32" stroke="#bae6fd" stroke-width="1.5"/>
+    <text x="0" y="-10" text-anchor="middle" fill="#0c4a6e" font-size="13.5" font-weight="bold">MULTI-FACTOR</text>
+    <text x="0" y="10" text-anchor="middle" fill="#0c4a6e" font-size="13.5" font-weight="bold">VERIFICATION</text>
+    <text x="0" y="30" text-anchor="middle" fill="#0284c7" font-size="12" font-weight="600">ផ្ទៀងផ្ទាត់វត្តមានពហុកត្តា</text>
+    <text x="0" y="50" text-anchor="middle" fill="#475569" font-size="9.5">QR Hash + GPS + BLE + Bio</text>
+    <text x="0" y="66" text-anchor="middle" fill="#0369a1" font-size="9">7-Factor Pipeline</text>
+  </g>
+
+  <!-- PROCESS 5.0: LEAVE REQUEST & APPROVAL -->
+  <g transform="translate(250, 750)" filter="url(#shadow1)">
+    <circle r="65" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="0" y="-30" text-anchor="middle" fill="#1e40af" font-size="11" font-weight="bold">5.0</text>
+    <line x1="-50" y1="-20" x2="50" y2="-20" stroke="#bfdbfe" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">LEAVE REQUEST</text>
+    <text x="0" y="15" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">&amp; APPROVAL</text>
+    <text x="0" y="34" text-anchor="middle" fill="#2563eb" font-size="9.5">ស្នើសុំ &amp; អនុម័ត</text>
+    <text x="0" y="48" text-anchor="middle" fill="#64748b" font-size="8.5">ច្បាប់ឈប់សម្រាក</text>
+  </g>
+
+  <!-- PROCESS 6.0: AUDIT & ANALYTICS -->
+  <g transform="translate(1000, 750)" filter="url(#shadow1)">
+    <circle r="65" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="0" y="-30" text-anchor="middle" fill="#1e40af" font-size="11" font-weight="bold">6.0</text>
+    <line x1="-50" y1="-20" x2="50" y2="-20" stroke="#bfdbfe" stroke-width="1.2"/>
+    <text x="0" y="-2" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">AUDIT LOGGING</text>
+    <text x="0" y="15" text-anchor="middle" fill="#0f172a" font-size="11.5" font-weight="bold">&amp; ANALYTICS</text>
+    <text x="0" y="34" text-anchor="middle" fill="#2563eb" font-size="9.5">កត់ត្រាសវនកម្ម</text>
+    <text x="0" y="48" text-anchor="middle" fill="#64748b" font-size="8.5">&amp; របាយការណ៍ក្លែងបន្លំ</text>
+  </g>
+
+  <!-- ================= 6 DATA STORES ================= -->
+  <!-- D1: USERS & ROLES -->
+  <g transform="translate(140, 420)">
+    <line x1="0" y1="0" x2="180" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="42" x2="180" y2="42" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="1" width="45" height="40" fill="#e0f2fe"/>
+    <text x="22" y="26" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">D1</text>
+    <text x="55" y="19" fill="#0f172a" font-size="11.5" font-weight="bold">users &amp; roles</text>
+    <text x="55" y="34" fill="#64748b" font-size="9.5">គណនី, តួនាទី, Hash</text>
+  </g>
+
+  <!-- D2: DEVICES -->
+  <g transform="translate(380, 420)">
+    <line x1="0" y1="0" x2="180" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="42" x2="180" y2="42" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="1" width="45" height="40" fill="#e0f2fe"/>
+    <text x="22" y="26" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">D2</text>
+    <text x="55" y="19" fill="#0f172a" font-size="11.5" font-weight="bold">devices</text>
+    <text x="55" y="34" fill="#64748b" font-size="9.5">ចង UUID ម៉ាស៊ីន (1:1)</text>
+  </g>
+
+  <!-- D3: CLASSES & ROOMS -->
+  <g transform="translate(860, 420)">
+    <line x1="0" y1="0" x2="190" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="42" x2="190" y2="42" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="1" width="45" height="40" fill="#e0f2fe"/>
+    <text x="22" y="26" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">D3</text>
+    <text x="55" y="19" fill="#0f172a" font-size="11" font-weight="bold">classes &amp; rooms</text>
+    <text x="55" y="34" fill="#64748b" font-size="9.5">Geofence, GPS, BLE UUID</text>
+  </g>
+
+  <!-- D4: SESSIONS & SALTS -->
+  <g transform="translate(1180, 420)">
+    <line x1="0" y1="0" x2="190" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="42" x2="190" y2="42" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="1" width="45" height="40" fill="#e0f2fe"/>
+    <text x="22" y="26" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">D4</text>
+    <text x="55" y="19" fill="#0f172a" font-size="11" font-weight="bold">sessions &amp; salts</text>
+    <text x="55" y="34" fill="#64748b" font-size="9.5">Dynamic QR Salt (15s)</text>
+  </g>
+
+  <!-- D5: ATTENDANCE RECORDS -->
+  <g transform="translate(520, 890)">
+    <line x1="0" y1="0" x2="220" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="42" x2="220" y2="42" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="1" width="45" height="40" fill="#e0f2fe"/>
+    <text x="22" y="26" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">D5</text>
+    <text x="55" y="19" fill="#0f172a" font-size="11" font-weight="bold">attendance_records</text>
+    <text x="55" y="34" fill="#64748b" font-size="9.5">កាលបរិច្ឆេទ, ស្ថានភាព &amp; ភស្តុតាង</text>
+  </g>
+
+  <!-- D6: LEAVE & AUDIT LOGS -->
+  <g transform="translate(860, 890)">
+    <line x1="0" y1="0" x2="220" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="42" x2="220" y2="42" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="1" width="45" height="40" fill="#e0f2fe"/>
+    <text x="22" y="26" text-anchor="middle" fill="#0369a1" font-size="13" font-weight="bold">D6</text>
+    <text x="55" y="19" fill="#0f172a" font-size="11" font-weight="bold">fraud_audit_logs</text>
+    <text x="55" y="34" fill="#64748b" font-size="9.5">កត់ត្រាការបន្លំ GPS, Proxy</text>
+  </g>
+
+  <!-- ================= FLOW CONNECTORS ================= -->
+  <!-- Student -> 1.0 (Login, UUID) -->
+  <path d="M 230 220 L 255 220" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arr1-b)"/>
+  <text x="242" y="210" text-anchor="middle" fill="#0369a1" font-size="9">Credentials</text>
+
+  <!-- 1.0 <-> D1 -->
+  <path d="M 320 305 L 240 420" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+  <!-- 1.0 <-> D2 -->
+  <path d="M 350 305 L 430 420" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+
+  <!-- Admin -> 2.0 -->
+  <path d="M 810 220 L 810 240" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr1-p)"/>
+  <!-- 2.0 -> D3 -->
+  <path d="M 765 340 L 900 420" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+
+  <!-- Teacher -> 3.0 -->
+  <path d="M 1370 230 L 1165 230" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arr1-g)"/>
+  <text x="1270" y="220" text-anchor="middle" fill="#15803d" font-size="9.5">Start Session &amp; Salt</text>
+
+  <!-- 3.0 -> Teacher (QR Code) -->
+  <path d="M 1165 260 L 1370 260" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arr1-g)"/>
+  <text x="1270" y="280" text-anchor="middle" fill="#15803d" font-size="9.5">Dynamic QR Display</text>
+
+  <!-- 3.0 <-> D4 -->
+  <path d="M 1120 305 L 1220 420" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+
+  <!-- Student -> 4.0 (Payload) -->
+  <path d="M 140 310 L 140 570 L 535 570" fill="none" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arr1-b)"/>
+  <text x="320" y="560" text-anchor="middle" fill="#0369a1" font-size="11" font-weight="bold">Scan Payload: QR Hash + GPS + BLE + Biometric UUID</text>
+
+  <!-- 4.0 reads D2 (Device binding) -->
+  <path d="M 500 462 L 560 520" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+  <!-- 4.0 reads D3 (Geofence specs) -->
+  <path d="M 900 462 L 685 520" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+  <!-- 4.0 reads D4 (Salt validity) -->
+  <path d="M 1200 462 L 705 550" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+
+  <!-- 4.0 writes D5 (Attendance record) -->
+  <path d="M 620 655 L 620 890" fill="none" stroke="#0284c7" stroke-width="2.2" marker-end="url(#arr1-b)"/>
+  <text x="630" y="780" fill="#0369a1" font-size="10.5" font-weight="bold">Save Verified Record (Present/Late)</text>
+
+  <!-- 4.0 writes D6 (Fraud logs if anomaly) -->
+  <path d="M 700 640 L 920 890" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="5,4" marker-end="url(#arr1-gray)"/>
+  <text x="830" y="720" fill="#dc2626" font-size="10.5" font-weight="bold">Log Spoof/Anomaly Violation</text>
+
+  <!-- 4.0 -> Student (Result) -->
+  <path d="M 535 590 L 160 590 L 160 310" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arr1-b)"/>
+  <text x="320" y="610" text-anchor="middle" fill="#0369a1" font-size="10.5">Attendance Status (Success / Rejected)</text>
+
+  <!-- Teacher reads D5 for Live Roster -->
+  <path d="M 740 910 L 1460 910 L 1460 310" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arr1-g)"/>
+  <text x="1200" y="900" fill="#15803d" font-size="10.5" font-weight="bold">Real-time Class Roster Stream</text>
+
+  <!-- Student -> 5.0 (Leave Request) -->
+  <path d="M 100 310 L 100 750 L 185 750" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arr1-b)"/>
+  <text x="140" y="735" fill="#0369a1" font-size="9.5">Leave App + Medical PDF</text>
+
+  <!-- 5.0 -> D5 & Teacher Approval -->
+  <path d="M 315 750 L 520 890" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+  <path d="M 280 815 L 280 850 L 1400 850 L 1400 310" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arr1-g)"/>
+  <text x="400" y="840" fill="#15803d" font-size="9.5">Teacher Review &amp; Approval Notification</text>
+
+  <!-- 6.0 reads D5, D6 -> Admin & Teacher -->
+  <path d="M 960 815 L 960 890" fill="none" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr1-gray)"/>
+  <path d="M 1065 750 L 1440 750 L 1440 310" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arr1-p)"/>
+  <text x="1260" y="740" fill="#6d28d9" font-size="10" font-weight="bold">Weekly Attendance &amp; Anomaly Reports</text>
+
+  <!-- Footer Information -->
+  <rect x="40" y="1030" width="1520" height="95" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="60" y="1060" fill="#0f172a" font-size="12.5" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (DFD Level 1 Architecture Defense Note):</text>
+  <text x="60" y="1085" fill="#475569" font-size="11.5">១. DFD Level 1 បង្ហាញពីការធ្វើដំណើរនៃទិន្នន័យយ៉ាងលម្អិតឆ្លងកាត់ ៦ Sub-processes និង ៦ Data Stores ដែលឆ្លុះបញ្ចាំងពី Controller និង Service ក្នុង Spring Boot។</text>
+  <text x="60" y="1108" fill="#475569" font-size="11.5">២. Process 4.0 គឺជាបេះដូងនៃប្រព័ន្ធ (Verification Engine) ដែលទទួលទិន្នន័យពីនិស្សិត រួច Validate ទន្ទឹមគ្នាជាមួយ D2 (Device), D3 (Geofence), D4 (Salt) មុននឹងកត់ត្រាចូល D5 ឬ D6។</text>
+</svg></div>
+        </div>
+        <div class="defense-card">
+          <h3>🎤 ចំណុចគន្លឹះសម្រាប់ឆ្លើយការពារសារណា (Defense Key Points):</h3>
+          <ul>
+            <li><b>Process 1.0 (Auth &amp; Device Binding):</b> ផ្ទៀងផ្ទាត់ JWT Token និងចង Device UUID 1:1 ជាមួយតារាង D1 (users) និង D2 (devices)។</li>
+            <li><b>Process 3.0 (Dynamic QR Generator):</b> បង្កើត QR Salt បង្វិលរៀងរាល់ ១៥ វិនាទី និងកត់ត្រាចូល D4 (sessions &amp; salts)។</li>
+            <li><b>Process 4.0 (Multi-Factor Verification):</b> បេះដូងនៃប្រព័ន្ធដែលផ្ទៀងផ្ទាត់ដំណាលគ្នាជាមួយ D2 (Device), D3 (Geofence), D4 (Salt) មុននឹងកត់ត្រាចូល D5 (records) ឬ D6 (fraud logs)។</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 2: ERD (RESITSHIP) ================= -->
+    <div id="tab2" class="tab-content">
+      <div class="action-bar">
+        <div class="diagram-info">
+          <h2>03. ENTITY-RELATIONSHIP DIAGRAM (ERD) — RELATIONSHIP 14 TABLES</h2>
+          <p>ស្ថាបត្យកម្មទិន្នន័យ PostgreSQL 16 បង្ហាញតារាងទាំង ១៤, PK, FK, Crow's Foot Cardinalities</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-png" onclick="downloadAsPNG('svg-erd', '03_ENTITY_RELATIONSHIP_DIAGRAM_ERD.png')">
+            📥 Download High-Res PNG (300 DPI)
+          </button>
+          <a class="btn btn-svg" href="03_ENTITY_RELATIONSHIP_DIAGRAM_ERD.svg" download="03_ENTITY_RELATIONSHIP_DIAGRAM_ERD.svg">
+            💾 Download SVG
+          </a>
+          <button class="btn btn-tool" onclick="zoomIn('svg-erd')">🔍 +</button>
+          <button class="btn btn-tool" onclick="zoomOut('svg-erd')">🔍 -</button>
+          <button class="btn btn-tool" onclick="resetZoom('svg-erd')">↺ Reset</button>
+        </div>
+      </div>
+      <div class="viewer-card">
+        <div class="svg-wrapper" id="wrap-erd" style="background:#0f172a;">
+          <div id="svg-erd"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1350" width="100%" height="100%" style="background:#0f172a; font-family:'JetBrains Mono', 'Kantumruy Pro', Consolas, monospace;">
+  <defs>
+    <filter id="erd-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 6 L 0 12 M 10 0 L 10 12" stroke="#38bdf8" stroke-width="1.8" fill="none"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="40" y="25" width="1620" height="75" rx="14" fill="#1e293b" stroke="#334155" stroke-width="2" filter="url(#erd-shadow)"/>
+  <text x="850" y="58" text-anchor="middle" fill="#38bdf8" font-size="21" font-weight="bold" font-family="'Kantumruy Pro', sans-serif">ENTITY-RELATIONSHIP DIAGRAM (ERD) — RELATIONSHIP 14 TABLES</text>
+  <text x="850" y="83" text-anchor="middle" fill="#94a3b8" font-size="13" font-family="'Kantumruy Pro', sans-serif">ស្ថាបត្យកម្មទិន្នន័យ PostgreSQL 16 ពេញលេញសម្រាប់ប្រព័ន្ធវត្តមានឆ្លាតវៃ — BBU IT THESIS</text>
+
+  <!-- ================= ROW 1: CORE AUTH & PLACES ================= -->
+  <!-- TABLE 1: ROLES -->
+  <g transform="translate(60, 140)" filter="url(#erd-shadow)">
+    <rect width="250" height="150" rx="10" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <rect width="250" height="34" rx="10" fill="#2563eb"/>
+    <rect y="20" width="250" height="14" fill="#2563eb"/>
+    <text x="125" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🛡️ roles</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="110" y="58" fill="#94a3b8" font-size="11.5">SERIAL</text>
+    <text x="15" y="86" fill="#e2e8f0" font-size="11.5">    name</text><text x="110" y="86" fill="#94a3b8" font-size="11.5">VARCHAR(50) UQ</text>
+    <text x="15" y="114" fill="#e2e8f0" font-size="11.5">    description</text><text x="110" y="114" fill="#94a3b8" font-size="11.5">TEXT</text>
+  </g>
+
+  <!-- TABLE 2: USERS -->
+  <g transform="translate(390, 140)" filter="url(#erd-shadow)">
+    <rect width="320" height="310" rx="10" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <rect width="320" height="34" rx="10" fill="#1d4ed8"/>
+    <rect y="20" width="320" height="14" fill="#1d4ed8"/>
+    <text x="160" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">👤 users</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="140" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  role_id</text><text x="140" y="82" fill="#94a3b8" font-size="11.5">INT -&gt; roles.id</text>
+    <text x="15" y="106" fill="#e2e8f0" font-size="11.5">    student_code</text><text x="140" y="106" fill="#94a3b8" font-size="11.5">VARCHAR(50) UQ</text>
+    <text x="15" y="130" fill="#e2e8f0" font-size="11.5">    employee_code</text><text x="140" y="130" fill="#94a3b8" font-size="11.5">VARCHAR(50) UQ</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    name</text><text x="140" y="154" fill="#94a3b8" font-size="11.5">VARCHAR(150)</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    email</text><text x="140" y="178" fill="#94a3b8" font-size="11.5">VARCHAR(150) UQ</text>
+    <text x="15" y="202" fill="#e2e8f0" font-size="11.5">    password_hash</text><text x="140" y="202" fill="#94a3b8" font-size="11.5">VARCHAR(255)</text>
+    <text x="15" y="226" fill="#e2e8f0" font-size="11.5">    phone</text><text x="140" y="226" fill="#94a3b8" font-size="11.5">VARCHAR(30)</text>
+    <text x="15" y="250" fill="#e2e8f0" font-size="11.5">    status</text><text x="140" y="250" fill="#94a3b8" font-size="11.5">VARCHAR(30)</text>
+    <text x="15" y="274" fill="#64748b" font-size="11">    created_at</text><text x="140" y="274" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+    <text x="15" y="296" fill="#64748b" font-size="11">    updated_at</text><text x="140" y="296" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 3: DEVICES -->
+  <g transform="translate(60, 360)" filter="url(#erd-shadow)">
+    <rect width="250" height="230" rx="10" fill="#1e293b" stroke="#0ea5e9" stroke-width="2"/>
+    <rect width="250" height="34" rx="10" fill="#0284c7"/>
+    <rect y="20" width="250" height="14" fill="#0284c7"/>
+    <text x="125" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">📱 devices</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="120" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="84" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  user_id</text><text x="120" y="84" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="110" fill="#e2e8f0" font-size="11.5">    device_uuid</text><text x="120" y="110" fill="#94a3b8" font-size="11.5">VARCHAR(255) UQ</text>
+    <text x="15" y="136" fill="#e2e8f0" font-size="11.5">    device_name</text><text x="120" y="136" fill="#94a3b8" font-size="11.5">VARCHAR(100)</text>
+    <text x="15" y="162" fill="#e2e8f0" font-size="11.5">    platform</text><text x="120" y="162" fill="#94a3b8" font-size="11.5">VARCHAR(50)</text>
+    <text x="15" y="188" fill="#e2e8f0" font-size="11.5">    is_active</text><text x="120" y="188" fill="#94a3b8" font-size="11.5">BOOLEAN</text>
+    <text x="15" y="214" fill="#64748b" font-size="11">    registered_at</text><text x="120" y="214" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 4: ROOMS -->
+  <g transform="translate(800, 140)" filter="url(#erd-shadow)">
+    <rect width="270" height="230" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <rect width="270" height="34" rx="10" fill="#059669"/>
+    <rect y="20" width="270" height="14" fill="#059669"/>
+    <text x="135" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🏢 rooms (Geofence)</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="125" y="58" fill="#94a3b8" font-size="11.5">SERIAL</text>
+    <text x="15" y="82" fill="#e2e8f0" font-size="11.5">    room_code</text><text x="125" y="82" fill="#94a3b8" font-size="11.5">VARCHAR(50) UQ</text>
+    <text x="15" y="106" fill="#e2e8f0" font-size="11.5">    building</text><text x="125" y="106" fill="#94a3b8" font-size="11.5">VARCHAR(50)</text>
+    <text x="15" y="130" fill="#e2e8f0" font-size="11.5">    latitude</text><text x="125" y="130" fill="#94a3b8" font-size="11.5">DECIMAL(10,8)</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    longitude</text><text x="125" y="154" fill="#94a3b8" font-size="11.5">DECIMAL(11,8)</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    radius_meters</text><text x="125" y="178" fill="#94a3b8" font-size="11.5">DECIMAL(5,2)</text>
+    <text x="15" y="202" fill="#e2e8f0" font-size="11.5">    ble_uuid</text><text x="125" y="202" fill="#94a3b8" font-size="11.5">VARCHAR(255)</text>
+  </g>
+
+  <!-- TABLE 5: CLASSES -->
+  <g transform="translate(1160, 140)" filter="url(#erd-shadow)">
+    <rect width="260" height="220" rx="10" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <rect width="260" height="34" rx="10" fill="#7c3aed"/>
+    <rect y="20" width="260" height="14" fill="#7c3aed"/>
+    <text x="130" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">📚 classes</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="125" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#e2e8f0" font-size="11.5">    class_code</text><text x="125" y="82" fill="#94a3b8" font-size="11.5">VARCHAR(50) UQ</text>
+    <text x="15" y="106" fill="#e2e8f0" font-size="11.5">    subject_name</text><text x="125" y="106" fill="#94a3b8" font-size="11.5">VARCHAR(150)</text>
+    <text x="15" y="130" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  teacher_id</text><text x="125" y="130" fill="#94a3b8" font-size="11.5">BIGINT -&gt; users.id</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    semester</text><text x="125" y="154" fill="#94a3b8" font-size="11.5">INT</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    academic_year</text><text x="125" y="178" fill="#94a3b8" font-size="11.5">VARCHAR(20)</text>
+  </g>
+
+  <!-- TABLE 6: CLASS ENROLLMENTS -->
+  <g transform="translate(1460, 140)" filter="url(#erd-shadow)">
+    <rect width="200" height="160" rx="10" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <rect width="200" height="34" rx="10" fill="#6d28d9"/>
+    <rect y="20" width="200" height="14" fill="#6d28d9"/>
+    <text x="100" y="23" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">👥 class_enrollments</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="100" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="84" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  class_id</text><text x="100" y="84" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="110" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  student_id</text><text x="100" y="110" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="136" fill="#64748b" font-size="10.5">    enrolled_at</text><text x="100" y="136" fill="#64748b" font-size="10.5">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- ================= ROW 2: SCHEDULES & SESSIONS ================= -->
+  <!-- TABLE 7: SCHEDULES -->
+  <g transform="translate(800, 420)" filter="url(#erd-shadow)">
+    <rect width="270" height="210" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <rect width="270" height="34" rx="10" fill="#047857"/>
+    <rect y="20" width="270" height="14" fill="#047857"/>
+    <text x="135" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">⏰ schedules</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="120" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  class_id</text><text x="120" y="82" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="106" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  room_id</text><text x="120" y="106" fill="#94a3b8" font-size="11.5">INT</text>
+    <text x="15" y="130" fill="#e2e8f0" font-size="11.5">    day_of_week</text><text x="120" y="130" fill="#94a3b8" font-size="11.5">INT (1-7)</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    start_time</text><text x="120" y="154" fill="#94a3b8" font-size="11.5">TIME</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    end_time</text><text x="120" y="178" fill="#94a3b8" font-size="11.5">TIME</text>
+  </g>
+
+  <!-- TABLE 8: ATTENDANCE SESSIONS -->
+  <g transform="translate(1160, 420)" filter="url(#erd-shadow)">
+    <rect width="300" height="260" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <rect width="300" height="34" rx="10" fill="#d97706"/>
+    <rect y="20" width="300" height="14" fill="#d97706"/>
+    <text x="150" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🎯 attendance_sessions</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="140" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  class_id</text><text x="140" y="82" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="106" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  schedule_id</text><text x="140" y="106" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="130" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  teacher_id</text><text x="140" y="130" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    session_date</text><text x="140" y="154" fill="#94a3b8" font-size="11.5">DATE</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    qr_secret</text><text x="140" y="178" fill="#94a3b8" font-size="11.5">VARCHAR(255)</text>
+    <text x="15" y="202" fill="#e2e8f0" font-size="11.5">    status</text><text x="140" y="202" fill="#94a3b8" font-size="11.5">VARCHAR(30)</text>
+    <text x="15" y="226" fill="#64748b" font-size="11">    started_at</text><text x="140" y="226" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 9: QR SALTS -->
+  <g transform="translate(1490, 420)" filter="url(#erd-shadow)">
+    <rect width="180" height="170" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <rect width="180" height="34" rx="10" fill="#b45309"/>
+    <rect y="20" width="180" height="14" fill="#b45309"/>
+    <text x="90" y="23" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">🧂 qr_salts (15s)</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="95" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="84" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  session_id</text><text x="95" y="84" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="110" fill="#e2e8f0" font-size="11.5">    salt_value</text><text x="95" y="110" fill="#94a3b8" font-size="11.5">VARCHAR(64)</text>
+    <text x="15" y="136" fill="#f87171" font-size="11">    expires_at</text><text x="95" y="136" fill="#f87171" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- ================= ROW 3: RECORDS, VERIFICATION & FRAUD ================= -->
+  <!-- TABLE 10: ATTENDANCE RECORDS -->
+  <g transform="translate(680, 730)" filter="url(#erd-shadow)">
+    <rect width="300" height="230" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <rect width="300" height="34" rx="10" fill="#059669"/>
+    <rect y="20" width="300" height="14" fill="#059669"/>
+    <text x="150" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">📝 attendance_records</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="140" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  session_id</text><text x="140" y="82" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="106" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  student_id</text><text x="140" y="106" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="130" fill="#e2e8f0" font-size="11.5">    check_in_time</text><text x="140" y="130" fill="#94a3b8" font-size="11.5">TIMESTAMPTZ</text>
+    <text x="15" y="154" fill="#4ade80" font-size="11.5" font-weight="bold">    status</text><text x="140" y="154" fill="#4ade80" font-size="11.5">PRESENT/LATE/ABSENT</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    remarks</text><text x="140" y="178" fill="#94a3b8" font-size="11.5">TEXT</text>
+    <text x="15" y="202" fill="#64748b" font-size="11">    created_at</text><text x="140" y="202" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 11: CHECK-IN VERIFICATIONS -->
+  <g transform="translate(1080, 730)" filter="url(#erd-shadow)">
+    <rect width="320" height="290" rx="10" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+    <rect width="320" height="34" rx="10" fill="#0891b2"/>
+    <rect y="20" width="320" height="14" fill="#0891b2"/>
+    <text x="160" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🔬 check_in_verifications</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="160" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  record_id</text><text x="160" y="82" fill="#94a3b8" font-size="11.5">BIGINT (1:1)</text>
+    <text x="15" y="106" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  device_id</text><text x="160" y="106" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="130" fill="#e2e8f0" font-size="11.5">    distance_meters</text><text x="160" y="130" fill="#94a3b8" font-size="11.5">DECIMAL(6,2)</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    ble_matched</text><text x="160" y="154" fill="#94a3b8" font-size="11.5">BOOLEAN</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    biometric_verified</text><text x="160" y="178" fill="#94a3b8" font-size="11.5">BOOLEAN</text>
+    <text x="15" y="202" fill="#e2e8f0" font-size="11.5">    qr_hash_valid</text><text x="160" y="202" fill="#94a3b8" font-size="11.5">BOOLEAN</text>
+    <text x="15" y="226" fill="#e2e8f0" font-size="11.5">    ip_address</text><text x="160" y="226" fill="#94a3b8" font-size="11.5">VARCHAR(45)</text>
+    <text x="15" y="250" fill="#f87171" font-size="11.5">    is_flagged</text><text x="160" y="250" fill="#f87171" font-size="11.5">BOOLEAN</text>
+    <text x="15" y="272" fill="#f87171" font-size="11">    failure_reason</text><text x="160" y="272" fill="#f87171" font-size="11">TEXT</text>
+  </g>
+
+  <!-- TABLE 12: FRAUD AUDIT LOGS -->
+  <g transform="translate(1430, 730)" filter="url(#erd-shadow)">
+    <rect width="230" height="230" rx="10" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <rect width="230" height="34" rx="10" fill="#b91c1c"/>
+    <rect y="20" width="230" height="14" fill="#b91c1c"/>
+    <text x="115" y="23" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">🚨 fraud_audit_logs</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="120" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  student_id</text><text x="120" y="82" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="106" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  session_id</text><text x="120" y="106" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="130" fill="#f87171" font-size="11.5">    violation_type</text><text x="120" y="130" fill="#f87171" font-size="11.5">VARCHAR(50)</text>
+    <text x="15" y="154" fill="#f87171" font-size="11.5">    risk_score</text><text x="120" y="154" fill="#f87171" font-size="11.5">INT (0-100)</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    payload_dump</text><text x="120" y="178" fill="#94a3b8" font-size="11.5">JSONB</text>
+    <text x="15" y="202" fill="#64748b" font-size="11">    detected_at</text><text x="120" y="202" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 13: LEAVE REQUESTS -->
+  <g transform="translate(60, 680)" filter="url(#erd-shadow)">
+    <rect width="270" height="250" rx="10" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <rect width="270" height="34" rx="10" fill="#be185d"/>
+    <rect y="20" width="270" height="14" fill="#be185d"/>
+    <text x="135" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">📄 leave_requests</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="120" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  student_id</text><text x="120" y="82" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="106" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  class_id</text><text x="120" y="106" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="130" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  session_id</text><text x="120" y="130" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    reason</text><text x="120" y="154" fill="#94a3b8" font-size="11.5">TEXT</text>
+    <text x="15" y="178" fill="#e2e8f0" font-size="11.5">    document_url</text><text x="120" y="178" fill="#94a3b8" font-size="11.5">VARCHAR(255)</text>
+    <text x="15" y="202" fill="#e2e8f0" font-size="11.5">    status</text><text x="120" y="202" fill="#94a3b8" font-size="11.5">PENDING/APPROVED</text>
+    <text x="15" y="226" fill="#38bdf8" font-size="11">FK  approved_by</text><text x="120" y="226" fill="#64748b" font-size="11">BIGINT</text>
+  </g>
+
+  <!-- TABLE 14: SYSTEM AUDIT LOGS -->
+  <g transform="translate(60, 990)" filter="url(#erd-shadow)">
+    <rect width="270" height="200" rx="10" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <rect width="270" height="34" rx="10" fill="#6d28d9"/>
+    <rect y="20" width="270" height="14" fill="#6d28d9"/>
+    <text x="135" y="23" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">📜 system_audit_logs</text>
+    <text x="15" y="58" fill="#facc15" font-size="11.5" font-weight="bold">PK  id</text><text x="120" y="58" fill="#94a3b8" font-size="11.5">BIGSERIAL</text>
+    <text x="15" y="82" fill="#38bdf8" font-size="11.5" font-weight="bold">FK  user_id</text><text x="120" y="82" fill="#94a3b8" font-size="11.5">BIGINT</text>
+    <text x="15" y="106" fill="#e2e8f0" font-size="11.5">    action</text><text x="120" y="106" fill="#94a3b8" font-size="11.5">VARCHAR(100)</text>
+    <text x="15" y="130" fill="#e2e8f0" font-size="11.5">    entity_name</text><text x="120" y="130" fill="#94a3b8" font-size="11.5">VARCHAR(50)</text>
+    <text x="15" y="154" fill="#e2e8f0" font-size="11.5">    ip_address</text><text x="120" y="154" fill="#94a3b8" font-size="11.5">VARCHAR(45)</text>
+    <text x="15" y="178" fill="#64748b" font-size="11">    created_at</text><text x="120" y="178" fill="#64748b" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- ================= RELATIONSHIP CONNECTORS (CROW'S FOOT) ================= -->
+  <!-- roles (1) -> (N) users -->
+  <path d="M 310 200 L 390 200" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- users (1) -> (N) devices -->
+  <path d="M 390 380 L 310 380" fill="none" stroke="#0ea5e9" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- users (1) -> (N) classes (as teacher) -->
+  <path d="M 710 220 L 1160 220" fill="none" stroke="#8b5cf6" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- classes (1) -> (N) class_enrollments -->
+  <path d="M 1420 200 L 1460 200" fill="none" stroke="#8b5cf6" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- rooms (1) -> (N) schedules -->
+  <path d="M 935 370 L 935 420" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- classes (1) -> (N) schedules -->
+  <path d="M 1190 360 L 1190 390 L 1070 450" fill="none" stroke="#8b5cf6" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- schedules (1) -> (N) attendance_sessions -->
+  <path d="M 1070 520 L 1160 520" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- attendance_sessions (1) -> (N) qr_salts -->
+  <path d="M 1460 500 L 1490 500" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- attendance_sessions (1) -> (N) attendance_records -->
+  <path d="M 1250 680 L 1250 710 L 900 710 L 900 730" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- users (student) (1) -> (N) attendance_records -->
+  <path d="M 550 450 L 550 780 L 680 780" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- attendance_records (1) -> (1) check_in_verifications -->
+  <path d="M 980 840 L 1080 840" fill="none" stroke="#06b6d4" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- devices (1) -> (N) check_in_verifications -->
+  <path d="M 180 590 L 180 640 L 1120 640 L 1120 730" fill="none" stroke="#0ea5e9" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#crow)"/>
+
+  <!-- attendance_sessions (1) -> (N) fraud_audit_logs -->
+  <path d="M 1350 680 L 1350 710 L 1500 710 L 1500 730" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- users (1) -> (N) leave_requests -->
+  <path d="M 450 450 L 450 720 L 330 720" fill="none" stroke="#ec4899" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- users (1) -> (N) system_audit_logs -->
+  <path d="M 410 450 L 410 1050 L 330 1050" fill="none" stroke="#8b5cf6" stroke-width="2" marker-end="url(#crow)"/>
+
+  <!-- Footer Information -->
+  <rect x="40" y="1230" width="1620" height="95" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="1260" fill="#38bdf8" font-size="12.5" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (ERD / Database Architecture Defense Note):</text>
+  <text x="60" y="1285" fill="#cbd5e1" font-size="11.5">១. ដ្យាក្រាម ERD បង្ហាញពីទំនាក់ទំនង (Relationships / Resitship) រវាងតារាងទាំង ១៤ នៃ PostgreSQL 16 ដោយប្រើស្តង់ដារ Crow's Foot Notation (1:N, 1:1, M:N)។</text>
+  <text x="60" y="1308" fill="#cbd5e1" font-size="11.5">២. តារាង check_in_verifications មានទំនាក់ទំនង 1:1 ជាមួយ attendance_records ដើម្បីផ្ទុកភស្តុតាងវិទ្យាសាស្ត្រ (Biometric, BLE RSSI, GPS Haversine, QR Hash) សម្រាប់ការធ្វើសវនកម្ម (Audit)។</text>
+</svg></div>
+        </div>
+        <div class="defense-card">
+          <h3>🎤 ចំណុចគន្លឹះសម្រាប់ឆ្លើយការពារសារណា (Defense Key Points):</h3>
+          <ul>
+            <li><b>14 Normalized Tables:</b> បំបែកតាមស្តង់ដារ 3NF (Third Normal Form) ធានាគ្មានទិន្នន័យស្ទួន (Data Redundancy)។</li>
+            <li><b>Evidence Verification (1:1):</b> តារាង <code>check_in_verifications</code> ចង 1:1 ជាមួយ <code>attendance_records</code> ដើម្បីផ្ទុកភស្តុតាងសវនកម្ម (Distance, BLE Matched, Biometric Verified, QR Hash Valid)។</li>
+            <li><b>Security &amp; Audit:</b> មាន <code>fraud_audit_logs</code> (ផ្ទុក Payload Dump ជា JSONB) និង <code>system_audit_logs</code> ដើម្បីត្រួតពិនិត្យភាពមិនប្រក្រតី។</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 3: 7-FACTOR PIPELINE ================= -->
+    <div id="tab3" class="tab-content">
+      <div class="action-bar">
+        <div class="diagram-info">
+          <h2>04. MULTI-FACTOR PHYSICAL PRESENCE VERIFICATION PIPELINE FLOW</h2>
+          <p>លំហូរផ្ទៀងផ្ទាត់ ៧ ស្រទាប់ដើម្បីទប់ស្កាត់ការកត់វត្តមានជំនួសគ្នា ១០០%</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-png" onclick="downloadAsPNG('svg-pipeline', '04_MULTI_FACTOR_PRESENCE_VERIFICATION_FLOW.png')">
+            📥 Download High-Res PNG (300 DPI)
+          </button>
+          <a class="btn btn-svg" href="04_MULTI_FACTOR_PRESENCE_VERIFICATION_FLOW.svg" download="04_MULTI_FACTOR_PRESENCE_VERIFICATION_FLOW.svg">
+            💾 Download SVG
+          </a>
+          <button class="btn btn-tool" onclick="zoomIn('svg-pipeline')">🔍 +</button>
+          <button class="btn btn-tool" onclick="zoomOut('svg-pipeline')">🔍 -</button>
+          <button class="btn btn-tool" onclick="resetZoom('svg-pipeline')">↺ Reset</button>
+        </div>
+      </div>
+      <div class="viewer-card">
+        <div class="svg-wrapper" id="wrap-pipeline" style="background:#0b1120;">
+          <div id="svg-pipeline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 950" width="100%" height="100%" style="background:#0b1120; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="p-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="parr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="40" y="25" width="1320" height="75" rx="14" fill="#1e293b" stroke="#334155" stroke-width="2" filter="url(#p-shadow)"/>
+  <text x="700" y="58" text-anchor="middle" fill="#38bdf8" font-size="20" font-weight="bold">MULTI-FACTOR PHYSICAL PRESENCE VERIFICATION PIPELINE</text>
+  <text x="700" y="83" text-anchor="middle" fill="#94a3b8" font-size="13">ដំណើរការផ្ទៀងផ្ទាត់ ៧ ស្រទាប់ដើម្បីទប់ស្កាត់ការកត់វត្តមានជំនួសគ្នា ១០០% — BBU IT THESIS</text>
+
+  <!-- Step 0: Mobile Client Sensor Capture (Left Box) -->
+  <g transform="translate(60, 140)" filter="url(#p-shadow)">
+    <rect width="260" height="690" rx="14" fill="#1e293b" stroke="#0284c7" stroke-width="2"/>
+    <rect width="260" height="42" rx="14" fill="#0284c7"/>
+    <rect y="26" width="260" height="16" fill="#0284c7"/>
+    <text x="130" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">📱 STUDENT MOBILE APP</text>
+    
+    <g transform="translate(20, 65)">
+      <text x="0" y="20" fill="#38bdf8" font-size="12" font-weight="bold">1. Camera Scanner</text>
+      <text x="0" y="40" fill="#94a3b8" font-size="10.5">Captures Dynamic QR</text>
+
+      <text x="0" y="85" fill="#38bdf8" font-size="12" font-weight="bold">2. GPS Engine</text>
+      <text x="0" y="105" fill="#94a3b8" font-size="10.5">Latitude, Longitude</text>
+      <text x="0" y="123" fill="#64748b" font-size="9.5">Accuracy: ±5-10 meters</text>
+
+      <text x="0" y="168" fill="#38bdf8" font-size="12" font-weight="bold">3. BLE Scanner</text>
+      <text x="0" y="188" fill="#94a3b8" font-size="10.5">Room Beacon UUID</text>
+      <text x="0" y="206" fill="#64748b" font-size="9.5">Signal: RSSI ≥ -75 dBm</text>
+
+      <text x="0" y="251" fill="#38bdf8" font-size="12" font-weight="bold">4. Biometrics</text>
+      <text x="0" y="271" fill="#94a3b8" font-size="10.5">FaceID / Fingerprint</text>
+      <text x="0" y="289" fill="#64748b" font-size="9.5">Crypto signature pass</text>
+
+      <text x="0" y="334" fill="#38bdf8" font-size="12" font-weight="bold">5. Device Hardware</text>
+      <text x="0" y="354" fill="#94a3b8" font-size="10.5">Hardware UUID Binding</text>
+
+      <rect x="0" y="400" width="220" height="90" rx="8" fill="#0f172a" stroke="#0ea5e9" stroke-width="1.2"/>
+      <text x="110" y="425" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">Payload Construction</text>
+      <text x="110" y="445" text-anchor="middle" fill="#94a3b8" font-size="9.5">HMAC-SHA256 Signed</text>
+      <text x="110" y="465" text-anchor="middle" fill="#64748b" font-size="9">{qr, gps, ble, bio, uuid}</text>
+
+      <rect x="0" y="520" width="220" height="70" rx="8" fill="#0284c7"/>
+      <text x="110" y="548" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">POST /api/attendance</text>
+      <text x="110" y="568" text-anchor="middle" fill="#e0f2fe" font-size="10">HTTPS Payload Dispatch 🚀</text>
+    </g>
+  </g>
+
+  <!-- Arrow from Phone to Pipeline -->
+  <path d="M 320 480 L 410 480" fill="none" stroke="#38bdf8" stroke-width="3" marker-end="url(#parr)"/>
+  <text x="365" y="470" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">JSON</text>
+
+  <!-- 7 PIPELINE STAGES IN BACKEND (Center Container) -->
+  <g transform="translate(420, 140)" filter="url(#p-shadow)">
+    <rect width="570" height="690" rx="14" fill="#0f172a" stroke="#1e3a8a" stroke-width="2"/>
+    <rect width="570" height="42" rx="14" fill="#1e3a8a"/>
+    <rect y="26" width="570" height="16" fill="#1e3a8a"/>
+    <text x="285" y="27" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">⚙️ SPRING BOOT VERIFICATION PIPELINE (7 STEPS)</text>
+
+    <!-- STEP 1: JWT & DEVICE UUID BINDING -->
+    <g transform="translate(25, 60)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#2563eb"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">1</text>
+      <text x="70" y="28" fill="#38bdf8" font-size="12.5" font-weight="bold">ស្រទាប់ទី ១: ផ្ទៀងផ្ទាត់ JWT Token &amp; ចង Device UUID</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ពិនិត្យថាទូរសព្ទស្កេន ត្រូវគ្នានឹង UUID ដែលបានចុះឈ្មោះក្នុងតារាង devices ឬអត់ (Anti-Account Sharing)</text>
+    </g>
+
+    <!-- STEP 2: SESSION & CLASS ACTIVE CHECK -->
+    <g transform="translate(25, 140)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#2563eb"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">2</text>
+      <text x="70" y="28" fill="#38bdf8" font-size="12.5" font-weight="bold">ស្រទាប់ទី ២: ពិនិត្យស្ថានភាព Session &amp; កាលវិភាគ (Active Session)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">វគ្គសិក្សាកំពុងដំណើរការ (status = 'ACTIVE') ហើយនិស្សិតមានឈ្មោះក្នុង enrollment នៃមុខវិជ្ជានោះ</text>
+    </g>
+
+    <!-- STEP 3: DYNAMIC QR SALT & TIME TOLERANCE -->
+    <g transform="translate(25, 220)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#d97706"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">3</text>
+      <text x="70" y="28" fill="#fbbf24" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៣: សុពលភាព Dynamic QR Code Salt (15 Seconds)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">HMAC Hash ត្រូវតែ match នឹង QR Salt បច្ចុប្បន្ន (ការពារការថតរូប QR បញ្ជូនតាម Telegram)</text>
+    </g>
+
+    <!-- STEP 4: GEOFENCE HAVERSINE FORMULA -->
+    <g transform="translate(25, 300)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#059669"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">4</text>
+      <text x="70" y="28" fill="#34d399" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៤: គណនាចម្ងាយ GPS Geofencing (Haversine Formula)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ចម្ងាយរវាងនិស្សិត និងកណ្តាលបន្ទប់រៀនត្រូវតែ ≤ 15 ម៉ែត្រ (ការពារការស្កេនពីក្រៅបន្ទប់)</text>
+    </g>
+
+    <!-- STEP 5: BLE BEACON PROXIMITY RSSI -->
+    <g transform="translate(25, 380)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#059669"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">5</text>
+      <text x="70" y="28" fill="#34d399" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៥: ផ្ទៀងផ្ទាត់រលកសញ្ញា BLE Beacon (RSSI Proximity)</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ស្កេនឃើញ UUID ឧបករណ៍ Beacon ក្នុងបន្ទប់រៀនផ្ទាល់ដោយមានកម្រិត RSSI ≥ -75 dBm</text>
+    </g>
+
+    <!-- STEP 6: BIOMETRIC CRYPTOGRAPHIC PROOF -->
+    <g transform="translate(25, 460)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#7c3aed"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">6</text>
+      <text x="70" y="28" fill="#c084fc" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៦: ផ្ទៀងផ្ទាត់ Biometric Cryptographic Proof</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ពិនិត្យហត្ថលេខាឌីជីថលសុវត្ថិភាព (Android KeyStore / iOS Secure Enclave) នៃ FaceID</text>
+    </g>
+
+    <!-- STEP 7: DUP CHECK & ANTI-SPOOFING -->
+    <g transform="translate(25, 540)">
+      <rect width="520" height="68" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="1.5"/>
+      <circle cx="35" cy="34" r="18" fill="#0891b2"/>
+      <text x="35" y="40" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">7</text>
+      <text x="70" y="28" fill="#67e8f9" font-size="12.5" font-weight="bold">ស្រទាប់ទី ៧: ពិនិត្យស្ទួន (Duplicate Check) &amp; Mock Location Detection</text>
+      <text x="70" y="48" fill="#94a3b8" font-size="10.5">ធានាថាមិនទាន់ចុះវត្តមានក្នុងវគ្គនេះម្តងទៀត និងគ្មាន Mock Location/VPN បន្លំឡើយ</text>
+    </g>
+
+    <text x="285" y="650" text-anchor="middle" fill="#94a3b8" font-size="11">ចំណាំ៖ ប្រសិនបើឆ្លងកាត់គ្រប់ ៧ ស្រទាប់ = SUCCESS | ប្រសិនបើធ្លាក់ត្រឹម ១ ស្រទាប់ = REJECT</text>
+  </g>
+
+  <!-- Output Decision Branches (Right Side) -->
+  <!-- Success Branch (Green) -->
+  <g transform="translate(1060, 240)" filter="url(#p-shadow)">
+    <rect width="280" height="180" rx="14" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/>
+    <text x="140" y="38" text-anchor="middle" fill="#34d399" font-size="15" font-weight="bold">✅ ATTENDANCE SUCCESS</text>
+    <line x1="20" y1="52" x2="260" y2="52" stroke="#059669" stroke-width="1.5"/>
+    <text x="25" y="80" fill="#a7f3d0" font-size="11.5">• Status: <b>PRESENT</b> ឬ <b>LATE</b></text>
+    <text x="25" y="105" fill="#a7f3d0" font-size="11">• Save to: <b>attendance_records</b></text>
+    <text x="25" y="130" fill="#a7f3d0" font-size="11">• Log to: <b>check_in_verifications</b></text>
+    <text x="25" y="155" fill="#6ee7b7" font-size="10.5">🔔 Push WebSocket Alert to Teacher</text>
+  </g>
+
+  <!-- Failure Branch (Red) -->
+  <g transform="translate(1060, 500)" filter="url(#p-shadow)">
+    <rect width="280" height="190" rx="14" fill="#4c0519" stroke="#f43f5e" stroke-width="2.5"/>
+    <text x="140" y="38" text-anchor="middle" fill="#fb7185" font-size="15" font-weight="bold">❌ REJECTED &amp; FLAGGED</text>
+    <line x1="20" y1="52" x2="260" y2="52" stroke="#be123c" stroke-width="1.5"/>
+    <text x="25" y="80" fill="#fecdd3" font-size="11.5">• Status: <b>FRAUD_ATTEMPT</b></text>
+    <text x="25" y="105" fill="#fecdd3" font-size="11">• Log to: <b>fraud_audit_logs</b></text>
+    <text x="25" y="130" fill="#fecdd3" font-size="11">• Reason: GPS out of range / Salt Exp</text>
+    <text x="25" y="152" fill="#fecdd3" font-size="11">• Risk Score: +40</text>
+    <text x="25" y="172" fill="#fda4af" font-size="10.5">⚠️ Alert Admin if risk &gt; 70</text>
+  </g>
+
+  <!-- Arrows to Success/Failure -->
+  <path d="M 990 330 L 1060 330" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#parr)"/>
+  <path d="M 990 595 L 1060 595" fill="none" stroke="#f43f5e" stroke-width="3" marker-end="url(#parr)"/>
+
+  <!-- Footer Information -->
+  <rect x="40" y="850" width="1320" height="80" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="880" fill="#38bdf8" font-size="12" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (Defense Note on Security Pipeline):</text>
+  <text x="60" y="904" fill="#cbd5e1" font-size="11">ការរួមបញ្ចូលគ្នារវាងកត្តាទាំង ៧ ធ្វើឱ្យប្រព័ន្ធបិទផ្លូវកេងបន្លំ ១០០%៖ Dynamic QR ទប់ស្កាត់ការថតរូបផ្ញើតាមឆាត, Device UUID ទប់ស្កាត់ការ Log គណនីលើម៉ាស៊ីនតែមួយ, GPS + BLE ធានាវត្តមានជាក់ស្តែងក្នុងបន្ទប់, និង Biometric ធានាថាសាមីខ្លួនផ្ទាល់ជាអ្នកកាន់ទូរសព្ទ។</text>
+</svg></div>
+        </div>
+        <div class="defense-card">
+          <h3>🎤 ចំណុចគន្លឹះសម្រាប់ឆ្លើយការពារសារណា (Defense Key Points):</h3>
+          <ul>
+            <li><b>Zero-Trust Presence Architecture:</b> មិនជឿជាក់លើកត្តាតែមួយនោះទេ ត្រូវឆ្លងកាត់ទាំង ៧ ដំណាក់កាល។</li>
+            <li><b>Haversine Geofencing Formula:</b> គណនាចម្ងាយកោងនៃផែនដីរវាងកូអរដោនេ GPS របស់និស្សិត និងកណ្តាលបន្ទប់រៀន (កម្រិតរង្វង់ ≤ 15m)។</li>
+            <li><b>Anti-Screenshot via Dynamic QR:</b> QR Code ផ្លាស់ប្តូរ Salt រៀងរាល់ ១៥ វិនាទី បើទោះជាថតរូបផ្ញើឱ្យគ្នាក៏ផុតកំណត់មិនអាចស្កេនបានឡើយ។</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 4: UML USE CASE ================= -->
+    <div id="tab4" class="tab-content">
+      <div class="action-bar">
+        <div class="diagram-info">
+          <h2>05. UML USE CASE DIAGRAM — ACTORS &amp; SYSTEM USE CASES</h2>
+          <p>ដ្យាក្រាម Use Case ស្តង់ដារបញ្ជាក់សិទ្ធិប្រើប្រាស់ និងអន្តរកម្មរវាង Student, Teacher, Admin</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-png" onclick="downloadAsPNG('svg-usecase', '05_UML_USE_CASE_DIAGRAM.png')">
+            📥 Download High-Res PNG (300 DPI)
+          </button>
+          <a class="btn btn-svg" href="05_UML_USE_CASE_DIAGRAM.svg" download="05_UML_USE_CASE_DIAGRAM.svg">
+            💾 Download SVG
+          </a>
+          <button class="btn btn-tool" onclick="zoomIn('svg-usecase')">🔍 +</button>
+          <button class="btn btn-tool" onclick="zoomOut('svg-usecase')">🔍 -</button>
+          <button class="btn btn-tool" onclick="resetZoom('svg-usecase')">↺ Reset</button>
+        </div>
+      </div>
+      <div class="viewer-card">
+        <div class="svg-wrapper" id="wrap-usecase" style="background:#ffffff;">
+          <div id="svg-usecase"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 950" width="100%" height="100%" style="background:#ffffff; font-family:'Kantumruy Pro', 'Battambang', 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <filter id="uc-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="headerGradUC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091e3a"/>
+      <stop offset="50%" stop-color="#163e72"/>
+      <stop offset="100%" stop-color="#1e5296"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="40" y="25" width="1220" height="75" rx="14" fill="url(#headerGradUC)" filter="url(#uc-shadow)"/>
+  <text x="650" y="58" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">UML USE CASE DIAGRAM — BBU SMART ATTENDANCE SYSTEM</text>
+  <text x="650" y="83" text-anchor="middle" fill="#93c5fd" font-size="13">ដ្យាក្រាម Use Case ស្តង់ដាររវាងតួអង្គទាំង ៣ (Student, Teacher, Admin) — BBU IT THESIS</text>
+
+  <!-- System Boundary Box -->
+  <rect x="360" y="130" width="580" height="730" rx="16" fill="#f8fafc" stroke="#2563eb" stroke-width="2.5" filter="url(#uc-shadow)"/>
+  <rect x="360" y="130" width="580" height="38" rx="16" fill="#eff6ff"/>
+  <text x="650" y="155" text-anchor="middle" fill="#1e40af" font-size="14" font-weight="bold">SMART ATTENDANCE SYSTEM BOUNDARY</text>
+
+  <!-- ACTOR 1: STUDENT (Left) -->
+  <g transform="translate(120, 310)">
+    <circle cx="50" cy="40" r="24" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+    <line x1="50" y1="64" x2="50" y2="125" stroke="#0284c7" stroke-width="3"/>
+    <line x1="15" y1="85" x2="85" y2="85" stroke="#0284c7" stroke-width="3"/>
+    <line x1="50" y1="125" x2="20" y2="175" stroke="#0284c7" stroke-width="3"/>
+    <line x1="50" y1="125" x2="80" y2="175" stroke="#0284c7" stroke-width="3"/>
+    <text x="50" y="205" text-anchor="middle" fill="#0c4a6e" font-size="15" font-weight="bold">👨‍🎓 និស្សិត</text>
+    <text x="50" y="225" text-anchor="middle" fill="#0284c7" font-size="12">(Student)</text>
+  </g>
+
+  <!-- ACTOR 2: TEACHER (Right Top) -->
+  <g transform="translate(1080, 260)">
+    <circle cx="50" cy="40" r="24" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <line x1="50" y1="64" x2="50" y2="125" stroke="#16a34a" stroke-width="3"/>
+    <line x1="15" y1="85" x2="85" y2="85" stroke="#16a34a" stroke-width="3"/>
+    <line x1="50" y1="125" x2="20" y2="175" stroke="#16a34a" stroke-width="3"/>
+    <line x1="50" y1="125" x2="80" y2="175" stroke="#16a34a" stroke-width="3"/>
+    <text x="50" y="205" text-anchor="middle" fill="#14532d" font-size="15" font-weight="bold">👨‍🏫 សាស្ត្រាចារ្យ</text>
+    <text x="50" y="225" text-anchor="middle" fill="#16a34a" font-size="12">(Teacher)</text>
+  </g>
+
+  <!-- ACTOR 3: ADMIN (Right Bottom) -->
+  <g transform="translate(1080, 600)">
+    <circle cx="50" cy="40" r="24" fill="#f3e8ff" stroke="#7c3aed" stroke-width="2.5"/>
+    <line x1="50" y1="64" x2="50" y2="125" stroke="#7c3aed" stroke-width="3"/>
+    <line x1="15" y1="85" x2="85" y2="85" stroke="#7c3aed" stroke-width="3"/>
+    <line x1="50" y1="125" x2="20" y2="175" stroke="#7c3aed" stroke-width="3"/>
+    <line x1="50" y1="125" x2="80" y2="175" stroke="#7c3aed" stroke-width="3"/>
+    <text x="50" y="205" text-anchor="middle" fill="#4c1d95" font-size="15" font-weight="bold">🏛️ អ្នកគ្រប់គ្រង</text>
+    <text x="50" y="225" text-anchor="middle" fill="#7c3aed" font-size="12">(Admin)</text>
+  </g>
+
+  <!-- USE CASES (ELLIPSES) -->
+  <!-- UC 1: Login & Register Device -->
+  <g transform="translate(650, 210)">
+    <ellipse rx="150" ry="26" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="bold">Login &amp; Bind Device UUID</text>
+  </g>
+
+  <!-- UC 2: Scan Dynamic QR -->
+  <g transform="translate(650, 275)">
+    <ellipse rx="150" ry="26" fill="#f0f9ff" stroke="#0284c7" stroke-width="2.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#0369a1" font-size="12.5" font-weight="bold">Scan Dynamic QR Code</text>
+  </g>
+
+  <!-- UC 3: Multi-Factor Verification Engine -->
+  <g transform="translate(650, 345)">
+    <ellipse rx="155" ry="28" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+    <text x="0" y="4" text-anchor="middle" fill="#0c4a6e" font-size="12.5" font-weight="bold">Verify Multi-Factor Physical Presence</text>
+  </g>
+
+  <!-- UC 4: View Attendance History -->
+  <g transform="translate(650, 415)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#1e40af" font-size="12">View Attendance History &amp; Summary</text>
+  </g>
+
+  <!-- UC 5: Submit Leave Request -->
+  <g transform="translate(650, 480)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#ec4899" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#be185d" font-size="12">Submit Leave Request with Document</text>
+  </g>
+
+  <!-- UC 6: Open Attendance Session -->
+  <g transform="translate(650, 550)">
+    <ellipse rx="150" ry="26" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.2"/>
+    <text x="0" y="4" text-anchor="middle" fill="#14532d" font-size="12.5" font-weight="bold">Open Session &amp; Stream Dynamic QR</text>
+  </g>
+
+  <!-- UC 7: Monitor Real-Time Roster -->
+  <g transform="translate(650, 620)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#15803d" font-size="12">Monitor Real-Time Roster &amp; Alerts</text>
+  </g>
+
+  <!-- UC 8: Manual Override -->
+  <g transform="translate(650, 685)">
+    <ellipse rx="150" ry="25" fill="#ffffff" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#15803d" font-size="12">Manual Attendance Status Override</text>
+  </g>
+
+  <!-- UC 9: Manage Users & Geofences -->
+  <g transform="translate(650, 755)">
+    <ellipse rx="150" ry="25" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#6d28d9" font-size="12">Manage Users, Classes &amp; Geofences</text>
+  </g>
+
+  <!-- UC 10: View Audit Logs & Fraud Reports -->
+  <g transform="translate(650, 820)">
+    <ellipse rx="150" ry="25" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.8"/>
+    <text x="0" y="4" text-anchor="middle" fill="#6d28d9" font-size="12">View Security Audit &amp; Fraud Reports</text>
+  </g>
+
+  <!-- ASSOCIATION LINES -->
+  <!-- Student Lines -->
+  <line x1="200" y1="380" x2="500" y2="210" stroke="#0284c7" stroke-width="1.8"/>
+  <line x1="200" y1="380" x2="500" y2="275" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="200" y1="380" x2="500" y2="415" stroke="#0284c7" stroke-width="1.8"/>
+  <line x1="200" y1="380" x2="500" y2="480" stroke="#0284c7" stroke-width="1.8"/>
+
+  <!-- <<include>> Scan QR -> Verify Presence -->
+  <path d="M 650 301 L 650 317" fill="none" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3"/>
+  <text x="685" y="312" fill="#0369a1" font-size="10" font-weight="bold">&lt;&lt;include&gt;&gt;</text>
+
+  <!-- Teacher Lines -->
+  <line x1="1080" y1="330" x2="800" y2="210" stroke="#16a34a" stroke-width="1.8"/>
+  <line x1="1080" y1="330" x2="800" y2="550" stroke="#16a34a" stroke-width="2.5"/>
+  <line x1="1080" y1="330" x2="800" y2="620" stroke="#16a34a" stroke-width="1.8"/>
+  <line x1="1080" y1="330" x2="800" y2="685" stroke="#16a34a" stroke-width="1.8"/>
+  <line x1="1080" y1="330" x2="800" y2="480" stroke="#16a34a" stroke-width="1.8"/>
+
+  <!-- Admin Lines -->
+  <line x1="1080" y1="670" x2="800" y2="210" stroke="#7c3aed" stroke-width="1.8"/>
+  <line x1="1080" y1="670" x2="800" y2="755" stroke="#7c3aed" stroke-width="2.2"/>
+  <line x1="1080" y1="670" x2="800" y2="820" stroke="#7c3aed" stroke-width="2.2"/>
+
+  <!-- Footer Information -->
+  <rect x="40" y="875" width="1220" height="60" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="60" y="900" fill="#0f172a" font-size="12" font-weight="bold">📌 សេចក្តីពន្យល់សម្រាប់ការពារសារណា (UML Use Case Defense Note):</text>
+  <text x="60" y="920" fill="#475569" font-size="11">ដ្យាក្រាម Use Case បង្ហាញតួនាទីសិទ្ធិ (Role-Based Access) យ៉ាងច្បាស់លាស់៖ និស្សិត (Mobile Scan), សាស្ត្រាចារ្យ (Session Control &amp; Live Monitor), និង Admin (System Governance)។</text>
+</svg></div>
+        </div>
+        <div class="defense-card">
+          <h3>🎤 ចំណុចគន្លឹះសម្រាប់ឆ្លើយការពារសារណា (Defense Key Points):</h3>
+          <ul>
+            <li><b>System Boundary:</b> ព្រំដែនប្រព័ន្ធកំណត់មុខងារច្បាស់លាស់ មិនឱ្យតួអង្គច្រឡំសិទ្ធិគ្នាឡើយ។</li>
+            <li><b>&lt;&lt;include&gt;&gt; Relationship:</b> ការ Scan Dynamic QR Code រួមបញ្ចូលជាចាំបាច់នូវមុខងារ Verify Multi-Factor Physical Presence។</li>
+            <li><b>Role Separation:</b> សាស្ត្រាចារ្យគ្រប់គ្រង Session &amp; Override រីឯ Admin គ្រប់គ្រង Config បន្ទប់, គណនី និងមើលរបាយការណ៍សវនកម្មទូទាំងសកលវិទ្យាល័យ។</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>គម្រោងសារណាបញ្ចប់ការសិក្សាថ្នាក់បរិញ្ញាបត្រ វិទ្យាសាស្ត្រកុំព្យូទ័រ និងព័ត៌មានវិទ្យា (IT) — សាកលវិទ្យាល័យ បៀលប្រាយ (BBU)</p>
+    <p style="margin-top:4px; color:#475569;">ប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ និងមានសុវត្ថិភាពខ្ពស់ • Smart &amp; Secure Attendance System</p>
+  </footer>
+
+  <!-- High-Res PNG Download & Tab Switcher Script -->
+  <script>
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+      tabs.forEach((t, i) => {
+        if (i === index) {
+          t.classList.add('active');
+          contents[i].classList.add('active');
+        } else {
+          t.classList.remove('active');
+          contents[i].classList.remove('active');
+        }
+      });
+    }
+
+    // Zoom Controls
+    const zoomLevels = {};
+    function zoomIn(id) {
+      zoomLevels[id] = (zoomLevels[id] || 1) + 0.15;
+      applyZoom(id);
+    }
+    function zoomOut(id) {
+      zoomLevels[id] = Math.max(0.4, (zoomLevels[id] || 1) - 0.15);
+      applyZoom(id);
+    }
+    function resetZoom(id) {
+      zoomLevels[id] = 1;
+      applyZoom(id);
+    }
+    function applyZoom(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.transform = `scale(${zoomLevels[id]})`;
+        el.style.transformOrigin = 'top center';
+        el.style.transition = 'transform 0.2s ease';
+      }
+    }
+
+    // 1-Click High-Res PNG Exporter (300 DPI via Canvas)
+    function downloadAsPNG(svgContainerId, filename) {
+      const container = document.getElementById(svgContainerId);
+      if (!container) return;
+      const svgEl = container.querySelector('svg');
+      if (!svgEl) return;
+
+      const svgData = new XMLSerializer().serializeToString(svgEl);
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const URL = window.URL || window.webkitURL || window;
+      const blobURL = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.onload = function() {
+        // Scale 3x for ultra-crisp 300 DPI quality
+        const scale = 3;
+        const canvas = document.createElement('canvas');
+        canvas.width = (svgEl.viewBox.baseVal.width || svgEl.clientWidth || 1400) * scale;
+        canvas.height = (svgEl.viewBox.baseVal.height || svgEl.clientHeight || 900) * scale;
+        const ctx = canvas.getContext('2d');
+
+        // Draw image
+        ctx.scale(scale, scale);
+        ctx.drawImage(img, 0, 0);
+
+        // Convert to PNG & Trigger Download
+        canvas.toBlob(function(blob) {
+          const a = document.createElement('a');
+          a.download = filename;
+          a.href = URL.createObjectURL(blob);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobURL);
+        }, 'image/png');
+      };
+      img.src = blobURL;
+    }
+  </script>
+</body>
+</html>

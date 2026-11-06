@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -17,25 +19,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Fetch the user from the database
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("រកមិនឃើញអ្នកប្រើប្រាស់ជាមួយ Email: " + email));
 
-        // Convert the user's roles into Spring Security SimpleGrantedAuthority objects
-        var authorities = java.util.Collections.singletonList(
-                new SimpleGrantedAuthority(user.getRole().getName())
-        );
-        // Check if the user's status is ACTIVE
-        boolean isActive = "ACTIVE".equalsIgnoreCase(user.getStatus());
-        // Return a Spring Security User object
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),          // Using email as the principal
-                user.getPasswordHash(),   // Matches your passwordHash field
-                isActive,                 // Checked against your String status field
-                true,                     // account non-expired
-                true,                     // credentials non-expired
-                true,                     // account non-locked
-                authorities
+                user.getEmail(),
+                user.getPasswordHash(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()))
         );
     }
 }

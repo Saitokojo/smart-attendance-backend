@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "bbu-smart-attendance-week1",
-    "name": "BBU Smart Attendance System - Week 1 (Auth API)",
-    "description": "សំណុំតេស្ត RESTful API សប្តាហ៍ទី ១ សម្រាប់គម្រោងសារណា BBU IT (សាកលវិទ្យាល័យបៀលប្រាយ)\nប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ - Authentication & Role-Based Access Control",
+    "name": "BBU Smart Attendance System - Complete API Test Suite",
+    "description": "សំណុំតេស្ត RESTful API ពេញលេញ សម្រាប់គម្រោងសារណា BBU IT (សាកលវិទ្យាល័យបៀលប្រាយ)\nប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ - Authentication, Role Management & User Services\nរៀបចំដោយនិស្សិត ខី វណ្ណារ៉ុង (Team Leader & System Architect)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -156,7 +156,7 @@
             "login"
           ]
         },
-        "description": "Endpoint Login ដោយផ្ទៀងផ្ទាត់ Email & Password (BCrypt) និងឆ្លើយតបមកវិញនូវ JWT Bearer Token។"
+        "description": "Endpoint Login ដោយផ្ទៀងផ្ទាត់ Email & Password (BCrypt) និងរក្សាទុក JWT Bearer Token ដោយស្វ័យប្រវត្តិ។"
       }
     },
     {
@@ -248,6 +248,211 @@
           ]
         },
         "description": "តេស្តករណីទិន្នន័យមិនត្រឹមត្រូវ ត្រូវចាប់ដោយ GlobalExceptionHandler ឆ្លើយតប 400 Bad Request។"
+      }
+    },
+    {
+      "name": "06. មើលបញ្ជី Roles ទាំងអស់ (Get All Roles - Requires JWT)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Roles list returned successfully\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.be.at.least(1);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/roles",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "roles"
+          ]
+        },
+        "description": "មើលបញ្ជី Role ទាំងអស់ក្នុងប្រព័ន្ធ (STUDENT, TEACHER, ADMIN)។ តម្រូវឱ្យមាន JWT Token ក្នុង Authorization Header។"
+      }
+    },
+    {
+      "name": "07. មើលព័ត៌មាន User តាម Email (Get User by Email - Requires JWT)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"User profile matched\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.email).to.eql('mengty@bbu.edu.kh');",
+              "    pm.expect(jsonData.roleName).to.eql('STUDENT');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/users/mengty@bbu.edu.kh",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "mengty@bbu.edu.kh"
+          ]
+        },
+        "description": "ទាញយកព័ត៌មាន User ដោយផ្អែកលើ Email តាមរយៈ UserController (Protected with JWT)។"
+      }
+    },
+    {
+      "name": "08. បង្កើត User ថ្មីដោយផ្ទាល់ (Create User with Role ID - Requires JWT)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"User created with correct role\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.email).to.eql('vannarong@bbu.edu.kh');",
+              "    pm.expect(jsonData.status).to.eql('ACTIVE');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Khin Vannarong\",\n  \"email\": \"vannarong@bbu.edu.kh\",\n  \"password\": \"password123\",\n  \"roleId\": 3,\n  \"phone\": \"012888999\",\n  \"employeeCode\": \"BBU-ADM-001\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        },
+        "description": "បង្កើតគណនី User ថ្មីដោយផ្ទាល់តាមរយៈ UserController ដោយកំណត់ Role ID (Requires JWT Token)។"
+      }
+    },
+    {
+      "name": "09. តេស្តរក User មិនឃើញ (Get User Not Found - 404 Not Found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "pm.test(\"Error response handled by GlobalExceptionHandler\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include('User not found');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/users/notfound@bbu.edu.kh",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "notfound@bbu.edu.kh"
+          ]
+        },
+        "description": "តេស្តករណីស្វែងរក Email ដែលមិនមានក្នុងប្រព័ន្ធ ដើម្បីផ្ទៀងផ្ទាត់ GlobalExceptionHandler ឆ្លើយតប 404 Not Found យ៉ាងត្រឹមត្រូវ។"
+      }
+    },
+    {
+      "name": "10. តេស្តសុវត្ថិភាពអត់ Token (Protected Endpoint Without Token - 403 Forbidden)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403 Forbidden\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/roles",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "roles"
+          ]
+        },
+        "description": "តេស្តសុវត្ថិភាព Spring Security៖ ហៅទៅកាន់ Protected Endpoint ដោយគ្មាន JWT Token ត្រូវតែត្រូវបានបដិសេធ (403 Forbidden)។"
       }
     }
   ]

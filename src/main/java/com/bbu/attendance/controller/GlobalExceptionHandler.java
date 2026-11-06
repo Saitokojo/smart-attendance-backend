@@ -43,6 +43,15 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(ex.getMessage()));
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<Void>> handleRuntimeException(RuntimeException ex) {
+        HttpStatus status = (ex.getMessage() != null && ex.getMessage().toLowerCase().contains("not found"))
+                ? HttpStatus.NOT_FOUND
+                : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGeneralException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

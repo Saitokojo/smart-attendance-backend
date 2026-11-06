@@ -3,10 +3,12 @@ package com.bbu.attendance.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -30,9 +33,17 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // អនុញ្ញាតដោយសេរីចំពោះ Auth Endpoints
+                        // 1. អនុញ្ញាតដោយសេរីចំពោះ Auth Endpoints & Error
                         .requestMatchers("/api/auth/**", "/error").permitAll()
-                        // Endpoints ផ្សេងទៀតតម្រូវឱ្យ Authenticated
+
+                        // 2. ការគ្រប់គ្រង Roles និងការបង្កើត User ដោយផ្ទាល់ អនុញ្ញាតតែ ADMIN ប៉ុណ្ណោះ
+                        .requestMatchers(HttpMethod.POST, "/api/roles/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN")
+
+                        // 3. ការមើល Roles អនុញ្ញាតសម្រាប់ ADMIN និង TEACHER
+                        .requestMatchers(HttpMethod.GET, "/api/roles/**").hasAnyRole("ADMIN", "TEACHER")
+
+                        // 4. Endpoints ផ្សេងទៀតទាំងអស់តម្រូវឱ្យ Authenticated
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

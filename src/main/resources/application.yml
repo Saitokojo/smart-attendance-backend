@@ -1,15 +1,15 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   application:
     name: smart-attendance-backend
 
   datasource:
-    # កែប្រែឈ្មោះ host, port, db name ឬ password ឱ្យត្រូវតាមកុំព្យូទ័ររបស់មិត្ត
-    url: jdbc:postgresql://localhost:5432/smart_attendance_db
-    username: postgres
-    password: postgres
+    # អាចកំណត់តាម Environment Variables ពេល Deploy ឬប្រើតម្លៃលំនាំដើមសម្រាប់ Local
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/smart_attendance_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -25,7 +25,7 @@ spring:
 application:
   security:
     jwt:
-      # Secret Key ប្រវែង 256-bit (Base64/Hex) សម្រាប់ HMAC-SHA256
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      # Secret Key ប្រវែង 256-bit (Base64/Hex) សម្រាប់ HMAC-SHA256 (អាច override តាម ENV: JWT_SECRET)
+      secret-key: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
       # រយៈពេលសុពលភាព Token (24 ម៉ោង = 86,400,000 milliseconds)
-      expiration: 86400000
+      expiration: ${JWT_EXPIRATION:86400000}

@@ -42,8 +42,15 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
-        // 3. ស្វែងរក Role
+        // 3. ស្វែងរក Role និងការពារ Privilege Escalation
         String roleName = request.getRole().toUpperCase().trim();
+        if ("ADMIN".equals(roleName)) {
+            throw new IllegalArgumentException("មិនអនុញ្ញាតឱ្យចុះឈ្មោះជា Admin តាមរយៈ Public Register ឡើយ! (Cannot register as ADMIN)");
+        }
+        if (!"STUDENT".equals(roleName) && !"TEACHER".equals(roleName)) {
+            throw new IllegalArgumentException("Role មិនត្រឹមត្រូវ! អនុញ្ញាតតែ STUDENT ឬ TEACHER ប៉ុណ្ណោះ");
+        }
+
         Role role = roleRepository.findByName(roleName)
                 .orElseThrow(() -> new IllegalArgumentException("មិនស្គាល់ Role: " + roleName + " (ត្រូវប្រើ STUDENT ឬ TEACHER)"));
 
@@ -78,7 +85,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse login(LoginRequest request) {
         String email = request.getEmail().toLowerCase().trim();
 
-        // 1. ផ្ទៀងផ្ទាត់ Email និង Password តាមរយៈ AuthenticationManager
+        // 1. ផ្ទៀងផ្ទាត់ Email និង Password តាមរយៈ AuthenticationManager (រួមទាំង Disabled check)
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, request.getPassword())

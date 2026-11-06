@@ -22,9 +22,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("រកមិនឃើញអ្នកប្រើប្រាស់ជាមួយ Email: " + email));
 
+        // ពិនិត្យមើលស្ថានភាពគណនី (Status: ACTIVE / SUSPENDED / INACTIVE)
+        boolean isEnabled = "ACTIVE".equalsIgnoreCase(user.getStatus());
+
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPasswordHash(),
+                isEnabled,
+                true, // accountNonExpired
+                true, // credentialsNonExpired
+                true, // accountNonLocked
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()))
         );
     }

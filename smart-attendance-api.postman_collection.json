@@ -1,8 +1,8 @@
 {
   "info": {
-    "_postman_id": "bbu-smart-attendance-week1",
-    "name": "BBU Smart Attendance System - Complete API Test Suite",
-    "description": "សំណុំតេស្ត RESTful API ពេញលេញ សម្រាប់គម្រោងសារណា BBU IT (សាកលវិទ្យាល័យបៀលប្រាយ)\nប្រព័ន្ធគ្រប់គ្រងវត្តមានឆ្លាតវៃ - Authentication, Role Management & User Services\nរៀបចំដោយនិស្សិត ខី វណ្ណារ៉ុង (Team Leader & System Architect)",
+    "_postman_id": "bbu-smart-attendance-week1-security",
+    "name": "BBU Smart Attendance System - Enterprise Security & API Test Suite",
+    "description": "សំណុំតេស្ត RESTful API និង Security Hardening ពេញលេញ សម្រាប់គម្រោងសារណា BBU IT (សាកលវិទ្យាល័យបៀលប្រាយ)\nរួមបញ្ចូលទាំងការធ្វើតេស្ត Authentication, RBAC (Role-Based Access Control), ABAC (Data Privacy), និង Privilege Escalation Prevention\nរៀបចំដោយនិស្សិត ខី វណ្ណារ៉ុង (Team Leader & System Architect)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -15,11 +15,21 @@
       "key": "jwt_token",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "student_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_jwt_token",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
     {
-      "name": "01. ចុះឈ្មោះសិស្សថ្មី (Register Student)",
+      "name": "01. ចុះឈ្មោះសិស្សថ្មី (Register Student - 201 Created)",
       "event": [
         {
           "listen": "test",
@@ -28,7 +38,7 @@
               "pm.test(\"Status code is 201 Created\", function () {",
               "    pm.response.to.have.status(201);",
               "});",
-              "pm.test(\"Response success is true\", function () {",
+              "pm.test(\"Response success is true with STUDENT role\", function () {",
               "    var jsonData = pm.response.json();",
               "    pm.expect(jsonData.success).to.eql(true);",
               "    pm.expect(jsonData.data.role).to.eql('STUDENT');",
@@ -66,7 +76,7 @@
       }
     },
     {
-      "name": "02. ចុះឈ្មោះគ្រូថ្មី (Register Teacher)",
+      "name": "02. ចុះឈ្មោះគ្រូថ្មី (Register Teacher - 201 Created)",
       "event": [
         {
           "listen": "test",
@@ -112,7 +122,53 @@
       }
     },
     {
-      "name": "03. ចូលប្រើប្រាស់ជោគជ័យ (Login Success - Auto Save JWT)",
+      "name": "03. ការពារ Privilege Escalation (Register as ADMIN - Must Fail 400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test(\"Privilege escalation is blocked\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include('Admin');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Hacker User\",\n  \"email\": \"hacker@bbu.edu.kh\",\n  \"password\": \"password123\",\n  \"role\": \"ADMIN\",\n  \"phone\": \"011999888\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        },
+        "description": "តេស្តសុវត្ថិភាពការពារ Privilege Escalation៖ ជនអនាមិកមិនអាចចុះឈ្មោះជា ADMIN តាម Public Register បានឡើយ។"
+      }
+    },
+    {
+      "name": "04. ចូលប្រើប្រាស់ជា Student (Login Student - Auto Save student_token)",
       "event": [
         {
           "listen": "test",
@@ -121,12 +177,13 @@
               "pm.test(\"Status code is 200 OK\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
-              "pm.test(\"Auto Save JWT Access Token to Collection Variable\", function () {",
+              "pm.test(\"Auto Save Student JWT Token\", function () {",
               "    var jsonData = pm.response.json();",
               "    pm.expect(jsonData.success).to.eql(true);",
-              "    pm.expect(jsonData.data.accessToken).to.be.a('string');",
+              "    pm.expect(jsonData.data.role).to.eql('STUDENT');",
+              "    pm.collectionVariables.set(\"student_token\", jsonData.data.accessToken);",
               "    pm.collectionVariables.set(\"jwt_token\", jsonData.data.accessToken);",
-              "    console.log(\"Saved JWT Token:\", jsonData.data.accessToken);",
+              "    console.log(\"Saved Student Token:\", jsonData.data.accessToken);",
               "});"
             ],
             "type": "text/javascript"
@@ -156,11 +213,59 @@
             "login"
           ]
         },
-        "description": "Endpoint Login ដោយផ្ទៀងផ្ទាត់ Email & Password (BCrypt) និងរក្សាទុក JWT Bearer Token ដោយស្វ័យប្រវត្តិ។"
+        "description": "Login ជាមួយគណនីសិស្ស និងរក្សាទុក token ទៅក្នុង variable 'student_token'។"
       }
     },
     {
-      "name": "04. ចូលប្រើប្រាស់បរាជ័យ (Login Fail - Bad Password)",
+      "name": "05. ចូលប្រើប្រាស់ជា Admin (Login Initial Admin - Auto Save admin_token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Auto Save Admin JWT Token\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data.role).to.eql('ADMIN');",
+              "    pm.collectionVariables.set(\"admin_jwt_token\", jsonData.data.accessToken);",
+              "    console.log(\"Saved Admin Token:\", jsonData.data.accessToken);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@bbu.edu.kh\",\n  \"password\": \"Admin@123456\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "Login ជាមួយគណនី Admin ដំបូងបង្អស់ដែលបង្កើតដោយ DataInitializer (admin@bbu.edu.kh / Admin@123456) និងរក្សាទុក admin_jwt_token។"
+      }
+    },
+    {
+      "name": "06. ចូលប្រើប្រាស់បរាជ័យ (Login Fail - Bad Password)",
       "event": [
         {
           "listen": "test",
@@ -205,7 +310,7 @@
       }
     },
     {
-      "name": "05. កំហុស Validation (Register Validation Error - Weak Password)",
+      "name": "07. កំហុស Validation (Register Validation Error - Weak Password)",
       "event": [
         {
           "listen": "test",
@@ -251,7 +356,7 @@
       }
     },
     {
-      "name": "06. មើលបញ្ជី Roles ទាំងអស់ (Get All Roles - Requires JWT)",
+      "name": "08. មើលបញ្ជី Roles ដោយ Admin (Get Roles as Admin - 200 OK)",
       "event": [
         {
           "listen": "test",
@@ -260,10 +365,10 @@
               "pm.test(\"Status code is 200 OK\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
-              "pm.test(\"Roles list returned successfully\", function () {",
+              "pm.test(\"Roles list returned successfully for Admin\", function () {",
               "    var jsonData = pm.response.json();",
               "    pm.expect(jsonData).to.be.an('array');",
-              "    pm.expect(jsonData.length).to.be.at.least(1);",
+              "    pm.expect(jsonData.length).to.be.at.least(3);",
               "});"
             ],
             "type": "text/javascript"
@@ -275,7 +380,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
+            "value": "Bearer {{admin_jwt_token}}"
           }
         ],
         "url": {
@@ -288,11 +393,51 @@
             "roles"
           ]
         },
-        "description": "មើលបញ្ជី Role ទាំងអស់ក្នុងប្រព័ន្ធ (STUDENT, TEACHER, ADMIN)។ តម្រូវឱ្យមាន JWT Token ក្នុង Authorization Header។"
+        "description": "Admin ប្រើប្រាស់ admin_jwt_token ដើម្បីទាញយកបញ្ជី Roles ទាំងអស់ (STUDENT, TEACHER, ADMIN)។"
       }
     },
     {
-      "name": "07. មើលព័ត៌មាន User តាម Email (Get User by Email - Requires JWT)",
+      "name": "09. តេស្ត RBAC: សិស្សមើល Roles ត្រូវបដិសេធ (Get Roles as Student - 403 Forbidden)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403 Forbidden\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "pm.test(\"Student is denied from viewing Roles\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/roles",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "roles"
+          ]
+        },
+        "description": "តេស្ត RBAC៖ គណនី STUDENT គ្មានសិទ្ធិមើលបញ្ជី Roles ទេ ត្រូវបដិសេធ 403 Forbidden។"
+      }
+    },
+    {
+      "name": "10. មើលព័ត៌មាន Profile ផ្ទាល់ខ្លួន (Get Own Profile by Student - 200 OK)",
       "event": [
         {
           "listen": "test",
@@ -301,7 +446,7 @@
               "pm.test(\"Status code is 200 OK\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
-              "pm.test(\"User profile matched\", function () {",
+              "pm.test(\"Student can view own profile\", function () {",
               "    var jsonData = pm.response.json();",
               "    pm.expect(jsonData.email).to.eql('mengty@bbu.edu.kh');",
               "    pm.expect(jsonData.roleName).to.eql('STUDENT');",
@@ -316,7 +461,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
+            "value": "Bearer {{student_token}}"
           }
         ],
         "url": {
@@ -330,11 +475,52 @@
             "mengty@bbu.edu.kh"
           ]
         },
-        "description": "ទាញយកព័ត៌មាន User ដោយផ្អែកលើ Email តាមរយៈ UserController (Protected with JWT)។"
+        "description": "សិស្សអាចទាញមើលព័ត៌មានគណនីផ្ទាល់ខ្លួនបានយ៉ាងជោគជ័យ (200 OK)។"
       }
     },
     {
-      "name": "08. បង្កើត User ថ្មីដោយផ្ទាល់ (Create User with Role ID - Requires JWT)",
+      "name": "11. តេស្ត ABAC: សិស្សមើល Profile របស់អ្នកដទៃត្រូវបដិសេធ (Get Other Profile by Student - 403 Forbidden)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403 Forbidden\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "pm.test(\"Data scraping is blocked\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/users/saren@bbu.edu.kh",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "saren@bbu.edu.kh"
+          ]
+        },
+        "description": "តេស្តការពារ BOLA/IDOR Data Privacy៖ សិស្សមិនអាចមើល Profile របស់គ្រូ ឬសិស្សដទៃទៀតបានឡើយ ត្រូវឆ្លើយតប 403 Forbidden។"
+      }
+    },
+    {
+      "name": "12. បង្កើត User ថ្មីដោយ Admin (Create User as Admin - 200 OK)",
       "event": [
         {
           "listen": "test",
@@ -343,7 +529,7 @@
               "pm.test(\"Status code is 200 OK\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
-              "pm.test(\"User created with correct role\", function () {",
+              "pm.test(\"Admin created new user\", function () {",
               "    var jsonData = pm.response.json();",
               "    pm.expect(jsonData.email).to.eql('vannarong@bbu.edu.kh');",
               "    pm.expect(jsonData.status).to.eql('ACTIVE');",
@@ -362,7 +548,7 @@
           },
           {
             "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
+            "value": "Bearer {{admin_jwt_token}}"
           }
         ],
         "body": {
@@ -379,23 +565,22 @@
             "users"
           ]
         },
-        "description": "បង្កើតគណនី User ថ្មីដោយផ្ទាល់តាមរយៈ UserController ដោយកំណត់ Role ID (Requires JWT Token)។"
+        "description": "Admin ប្រើប្រាស់ admin_jwt_token ដើម្បីបង្កើត User ថ្មីដោយផ្ទាល់។"
       }
     },
     {
-      "name": "09. តេស្តរក User មិនឃើញ (Get User Not Found - 404 Not Found)",
+      "name": "13. តេស្ត RBAC: សិស្សបង្កើត User ថ្មីត្រូវបដិសេធ (Create User as Student - 403 Forbidden)",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Status code is 404 Not Found\", function () {",
-              "    pm.response.to.have.status(404);",
+              "pm.test(\"Status code is 403 Forbidden\", function () {",
+              "    pm.response.to.have.status(403);",
               "});",
-              "pm.test(\"Error response handled by GlobalExceptionHandler\", function () {",
+              "pm.test(\"Student cannot create users directly\", function () {",
               "    var jsonData = pm.response.json();",
               "    pm.expect(jsonData.success).to.eql(false);",
-              "    pm.expect(jsonData.message).to.include('User not found');",
               "});"
             ],
             "type": "text/javascript"
@@ -403,29 +588,36 @@
         }
       ],
       "request": {
-        "method": "GET",
+        "method": "POST",
         "header": [
           {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
             "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
+            "value": "Bearer {{student_token}}"
           }
         ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Fake User\",\n  \"email\": \"fake@bbu.edu.kh\",\n  \"password\": \"password123\",\n  \"roleId\": 3,\n  \"phone\": \"012000111\"\n}"
+        },
         "url": {
-          "raw": "{{base_url}}/api/users/notfound@bbu.edu.kh",
+          "raw": "{{base_url}}/api/users",
           "host": [
             "{{base_url}}"
           ],
           "path": [
             "api",
-            "users",
-            "notfound@bbu.edu.kh"
+            "users"
           ]
         },
-        "description": "តេស្តករណីស្វែងរក Email ដែលមិនមានក្នុងប្រព័ន្ធ ដើម្បីផ្ទៀងផ្ទាត់ GlobalExceptionHandler ឆ្លើយតប 404 Not Found យ៉ាងត្រឹមត្រូវ។"
+        "description": "តេស្ត RBAC៖ សិស្ស (student_token) គ្មានសិទ្ធិហៅ POST /api/users ឡើយ ត្រូវបដិសេធ 403 Forbidden។"
       }
     },
     {
-      "name": "10. តេស្តសុវត្ថិភាពអត់ Token (Protected Endpoint Without Token - 403 Forbidden)",
+      "name": "14. តេស្តសុវត្ថិភាពគ្មាន Token (Protected Endpoint Without Token - 403 Forbidden)",
       "event": [
         {
           "listen": "test",
@@ -452,7 +644,7 @@
             "roles"
           ]
         },
-        "description": "តេស្តសុវត្ថិភាព Spring Security៖ ហៅទៅកាន់ Protected Endpoint ដោយគ្មាន JWT Token ត្រូវតែត្រូវបានបដិសេធ (403 Forbidden)។"
+        "description": "តេស្តសុវត្ថិភាព Spring Security៖ ហៅទៅកាន់ Protected Endpoint ដោយគ្មាន Token ត្រូវបដិសេធ 403 Forbidden។"
       }
     }
   ]

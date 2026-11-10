@@ -5,27 +5,40 @@ spring:
   application:
     name: smart-attendance-backend
 
+  # 1. បើកដំណើរការ Java 21 Virtual Threads (Project Loom) សម្រាប់ High Concurrency
+  threads:
+    virtual:
+      enabled: true
+
   datasource:
-    # អាចកំណត់តាម Environment Variables ពេល Deploy ឬប្រើតម្លៃលំនាំដើមសម្រាប់ Local
     url: ${DB_URL:jdbc:postgresql://localhost:5432/smart_attendance_db}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
+    # 2. HikariCP Connection Pool Optimization
+    hikari:
+      maximum-pool-size: 25
+      minimum-idle: 10
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false # បិទ show-sql លើ production ដើម្បីកាត់បន្ថយ IO delay
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 50 # បង្កើនល្បឿន Batch Insert
+          order_inserts: true
+          order_updates: true
 
 # ការកំណត់សុវត្ថិភាព JWT Token
 application:
   security:
     jwt:
-      # Secret Key ប្រវែង 256-bit (Base64/Hex) សម្រាប់ HMAC-SHA256 (អាច override តាម ENV: JWT_SECRET)
       secret-key: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
-      # រយៈពេលសុពលភាព Token (24 ម៉ោង = 86,400,000 milliseconds)
       expiration: ${JWT_EXPIRATION:86400000}

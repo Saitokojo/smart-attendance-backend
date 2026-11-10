@@ -43,6 +43,9 @@ public class SecurityConfig {
                         // 3. ការមើល Roles អនុញ្ញាតសម្រាប់ ADMIN និង TEACHER
                         .requestMatchers(HttpMethod.GET, "/api/roles/**").hasAnyRole("ADMIN", "TEACHER")
 
+                        // 4. Admin Management, Audit Logs & DevOps System Telemetry
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         // 4. Endpoints ផ្សេងទៀតទាំងអស់តម្រូវឱ្យ Authenticated
                         .anyRequest().authenticated()
                 )

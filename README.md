@@ -59,4 +59,4 @@
 > 4. Test Compile ជាមួយ Maven (`BUILD SUCCESS` គ្មាន Error)
 > 5. Commit & Push ឡើង GitHub Repository រួចរាល់!
 >
-> 👉 **ការងារថ្ងៃស្អែក (ថ្ងៃពុធ):** និស្សិត **ស្រ៊្រីល ម៉េងទី** អាច `git pull` យកកូដទៅធ្វើបន្តលើ **Module 1: Room & Geofence GPS CRUD (`com.bbu.attendance.room.*`)** បានដោយរលូន!
+> 👉 **ការងារថ្ងៃស្អែក (ថ្ងៃពុធ):** និស្សិត **ស្រិល ម៉េងទី** អាច `git pull` យកកូដទៅធ្វើបន្តលើ **Module 1: Room & Geofence GPS CRUD (`com.bbu.attendance.room.*`)** បានដោយរលូន!

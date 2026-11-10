@@ -2,7 +2,7 @@ package com.bbu.attendance.room.entity;
 
 /**
  * ម៉ូឌុលទី ១៖ Room & Geofence GPS Coordinates
- * សមាជិកទទួលខុសត្រូវ៖ ស្រ៊្រីល ម៉េងទី (វេនថ្ងៃពុធ)
+ * សមាជិកទទួលខុសត្រូវ៖ ស្រិល ម៉េងទី (វេនថ្ងៃពុធ)
  * ទីតាំង File៖ src/main/java/com/bbu/attendance/room/entity/Room.java
  *
  * ការណែនាំ៖
@@ -11,5 +11,5 @@ package com.bbu.attendance.room.entity;
  * - យោងតាម៖ ជំពូកទី ៤ នៃ WEEK_2_FULL_CODE_REFERENCE.md
  */
 public class Room {
-    // TODO [ស្រ៊្រីល ម៉េងទី]: សរសេរកូដ JPA Entity សម្រាប់ Table rooms នៅទីនេះ
+    // TODO [ស្រិល ម៉េងទី]: សរសេរកូដ JPA Entity សម្រាប់ Table rooms នៅទីនេះ
 }

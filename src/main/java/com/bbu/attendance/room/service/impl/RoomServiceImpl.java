@@ -2,7 +2,7 @@ package com.bbu.attendance.room.service.impl;
 
 /**
  * ម៉ូឌុលទី ១៖ Room & Geofence GPS Coordinates
- * សមាជិកទទួលខុសត្រូវ៖ ស្រ៊្រីល ម៉េងទី (វេនថ្ងៃពុធ)
+ * សមាជិកទទួលខុសត្រូវ៖ ស្រិល ម៉េងទី (វេនថ្ងៃពុធ)
  * ទីតាំង File៖ src/main/java/com/bbu/attendance/room/service/impl/RoomServiceImpl.java
  *
  * ការណែនាំ៖
@@ -12,5 +12,5 @@ package com.bbu.attendance.room.service.impl;
  * - យោងតាម៖ ជំពូកទី ៤ នៃ WEEK_2_FULL_CODE_REFERENCE.md
  */
 public class RoomServiceImpl {
-    // TODO [ស្រ៊្រីល ម៉េងទី]: សរសេរ Business Logic សម្រាប់ RoomService នៅទីនេះ
+    // TODO [ស្រិល ម៉េងទី]: សរសេរ Business Logic សម្រាប់ RoomService នៅទីនេះ
 }

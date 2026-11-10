@@ -646,6 +646,130 @@
         },
         "description": "តេស្តសុវត្ថិភាព Spring Security៖ ហៅទៅកាន់ Protected Endpoint ដោយគ្មាន Token ត្រូវបដិសេធ 403 Forbidden។"
       }
+    },
+    {
+      "name": "15. ទាញយក System Metrics & Virtual Thread Telemetry (Admin - 200 OK)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/admin/system/metrics",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "system",
+            "metrics"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "16. តេស្ត RBAC: សិស្សមើល System Metrics ត្រូវបដិសេធ (Student Metrics - 403 Forbidden)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/admin/system/metrics",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "system",
+            "metrics"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "17. ទាញយកកំណត់ត្រាសវនកម្ម ៥០ ជួរចុងក្រោយ (Get Audit Logs - 200 OK)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/admin/audit-logs",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "audit-logs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "18. តេស្ត RBAC: សិស្សមើល Audit Logs ត្រូវបដិសេធ (Student Audit Logs - 403 Forbidden)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/admin/audit-logs",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "audit-logs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "19. ទាញយកកំណត់ត្រាសវនកម្មតាម User ID (Audit Logs by User ID - 200 OK)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/admin/audit-logs/user/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "audit-logs",
+            "user",
+            "1"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

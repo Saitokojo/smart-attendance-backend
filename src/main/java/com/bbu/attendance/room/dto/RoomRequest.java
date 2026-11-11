@@ -10,6 +10,25 @@ package com.bbu.attendance.room.dto;
  * - បន្ថែម Jakarta Validations: @NotBlank roomCode, @NotBlank buildingName, @NotNull floorNumber, @NotNull latitude, @NotNull longitude, @NotNull radiusMeters
  * - យោងតាម៖ ជំពូកទី ៤ នៃ WEEK_2_FULL_CODE_REFERENCE.md
  */
-public record RoomRequest() {
-    // TODO [ស្រិល ម៉េងទី]: បំពេញ Record Parameters សម្រាប់ Room Request នៅទីនេះ
-}
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
+
+public record RoomRequest(
+    @NotBlank(message = "លេខសម្គាល់បន្ទប់មិនអាចទទេបានទេ (Room code is required)")
+    String roomCode,
+
+    @NotBlank(message = "ឈ្មោះអាគារមិនអាចទទេបានទេ (Building name is required)")
+    String buildingName,
+
+    @NotNull(message = "ជាន់មិនអាចទទេបានទេ (Floor number is required)")
+    Integer floorNumber,
+
+    @NotNull(message = "Latitude មិនអាចទទេបានទេ")
+    BigDecimal latitude,
+
+    @NotNull(message = "Longitude មិនអាចទទេបានទេ")
+    BigDecimal longitude,
+
+    BigDecimal geofenceRadius
+) {}

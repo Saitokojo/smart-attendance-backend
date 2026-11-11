@@ -10,6 +10,14 @@ package com.bbu.attendance.room.repository;
  * - បន្ថែម Methods: findByRoomCode(String roomCode), existsByRoomCode(String roomCode), findByIsActiveTrue()
  * - យោងតាម៖ ជំពូកទី ៤ នៃ WEEK_2_FULL_CODE_REFERENCE.md
  */
-public interface RoomRepository {
-    // TODO [ស្រិល ម៉េងទី]: សរសេរ JPA Queries សម្រាប់ Room នៅទីនេះ
+import com.bbu.attendance.room.entity.Room;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface RoomRepository extends JpaRepository<Room, Long> {
+    Optional<Room> findByRoomCode(String roomCode);
+    boolean existsByRoomCode(String roomCode);
 }

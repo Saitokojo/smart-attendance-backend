@@ -9,6 +9,15 @@ package com.bbu.attendance.room.dto;
  * - បង្កើត Java Record សម្រាប់បញ្ជូនទិន្នន័យបន្ទប់ និងកូអរដោនេ Geofence ចេញទៅខាងក្រៅ
  * - យោងតាម៖ ជំពូកទី ៤ នៃ WEEK_2_FULL_CODE_REFERENCE.md
  */
-public record RoomResponse() {
-    // TODO [ស្រិល ម៉េងទី]: បំពេញ Record Parameters សម្រាប់ Room Response នៅទីនេះ
-}
+import java.math.BigDecimal;
+
+public record RoomResponse(
+    Long id,
+    String roomCode,
+    String buildingName,
+    Integer floorNumber,
+    BigDecimal latitude,
+    BigDecimal longitude,
+    BigDecimal geofenceRadius,
+    String status
+) {}

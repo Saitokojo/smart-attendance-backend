@@ -34,6 +34,19 @@ services:
     networks:
       - attendance_net
 
+  # 3. Redis In-Memory Nonce Cache & Anti-Replay Engine (Week 3 Grand Finale)
+  redis:
+    image: redis:7-alpine
+    container_name: attendance_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - attendance_net
+
   # 3. Spring Boot Backend Service (Optional: for containerized deployment)
   # backend:
   #   build: .
@@ -52,6 +65,8 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
+  redis_data:
     driver: local
 
 networks:

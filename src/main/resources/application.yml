@@ -36,9 +36,31 @@ spring:
           order_inserts: true
           order_updates: true
 
-# ការកំណត់សុវត្ថិភាព JWT Token
+  # 3. Redis In-Memory Nonce Cache & Lettuce Connection Pool (Week 3 Grand Finale)
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 64
+          max-idle: 16
+          min-idle: 4
+          max-wait: 1000ms
+
+# ការកំណត់សុវត្ថិភាព JWT Token និង Geofence
 application:
   security:
     jwt:
       secret-key: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
       expiration: ${JWT_EXPIRATION:86400000}
+  attendance:
+    geofence-radius-meters: 40.0
+
+# ការកំណត់សុវត្ថិភាព Cryptographic Dynamic QR (HMAC-SHA256)
+app:
+  qr:
+    secret-key: ${QR_SECRET_KEY:BBU_SMART_ATTENDANCE_HMAC_SHA256_SECRET_KEY_SUPER_SECURE_2026}
+    validity-seconds: 15
+    clock-skew-seconds: 2

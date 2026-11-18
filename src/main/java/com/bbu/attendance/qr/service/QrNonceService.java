@@ -6,5 +6,6 @@ package com.bbu.attendance.qr.service;
  * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត ស្រិល ម៉េងទី (ថ្ងៃពុធ)
  */
 public interface QrNonceService {
-    // TODO: និស្សិត ស្រិល ម៉េងទី ត្រូវបំពេញ Method Signatures នៅទីនេះ
+    void registerNonce(String nonce, Long sessionId, long ttlSeconds);
+    void validateAndConsumeNonce(String nonce);
 }

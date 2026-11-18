@@ -6,5 +6,8 @@ package com.bbu.attendance.qr.repository;
  * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត ស្រិល ម៉េងទី (ថ្ងៃពុធ)
  */
 public interface RedisNonceRepository {
-    // TODO: និស្សិត ស្រិល ម៉េងទី ត្រូវបំពេញ Method Signatures នៅទីនេះ
+    
+    void saveNonce(String nonce, Long sessionId, long ttlSeconds);
+    boolean hasNonce(String nonce);
+    boolean consumeNonce(String nonce);
 }

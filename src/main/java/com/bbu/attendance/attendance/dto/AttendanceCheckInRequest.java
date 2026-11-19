@@ -1,10 +1,29 @@
 package com.bbu.attendance.attendance.dto;
 
-/**
- * DTO ទទួលសំណើ Multi-Factor Attendance Check-in ពីសិស្ស (QR + Device + GPS)
- * បង្កើតគ្រោងទុកជាមុនដោយ Team Leader: ខី វណ្ណារ៉ុង
- * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត មុត ភិរាក់នាន់ (ថ្ងៃព្រហស្បតិ៍)
- */
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.math.BigDecimal;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AttendanceCheckInRequest {
-    // TODO: និស្សិត មុត ភិរាក់នាន់ ត្រូវបំពេញ Fields, Validation Annotations នៅទីនេះ
+
+    @NotNull(message = "Session ID មិនអាចទទេបានឡើយ")
+    private Long sessionId;
+
+    @NotBlank(message = "Dynamic QR Token មិនអាចទទេបានឡើយ")
+    private String qrToken;
+
+    @NotBlank(message = "Device UUID មិនអាចទទេបានឡើយ")
+    private String deviceUuid;
+
+    @NotNull(message = "Latitude មិនអាចទទេបានឡើយ")
+    private BigDecimal latitude;
+
+    @NotNull(message = "Longitude មិនអាចទទេបានឡើយ")
+    private BigDecimal longitude;
 }

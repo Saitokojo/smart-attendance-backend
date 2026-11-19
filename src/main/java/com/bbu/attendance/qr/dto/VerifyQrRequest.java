@@ -1,10 +1,26 @@
 package com.bbu.attendance.qr.dto;
 
-/**
- * DTO ទទួលសំណើស្កេនផ្ទៀងផ្ទាត់ QR Token ពីសិស្សនិស្សិត
- * បង្កើតគ្រោងទុកជាមុនដោយ Team Leader: ខី វណ្ណារ៉ុង
- * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត មុត ភិរាក់នាន់ (ថ្ងៃព្រហស្បតិ៍)
- */
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class VerifyQrRequest {
-    // TODO: និស្សិត មុត ភិរាក់នាន់ ត្រូវបំពេញ Fields, Validation Annotations នៅទីនេះ
+    @NotBlank(message = "QR Token មិនអាចទទេបានឡើយ")
+    private String qrToken;
+
+    @NotNull(message = "Session ID មិនអាចទទេបានឡើយ")
+    private Long sessionId;
+
+    @NotBlank(message = "Device UUID មិនអាចទទេបានឡើយ")
+    private String deviceUuid;
+
+    private Double latitude;
+    private Double longitude;
 }

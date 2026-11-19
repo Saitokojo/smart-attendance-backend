@@ -1,10 +1,24 @@
 package com.bbu.attendance.attendance.service;
 
-/**
- * Interface សម្រាប់ The 10-Step Attendance Verification Pipeline Engine
- * បង្កើតគ្រោងទុកជាមុនដោយ Team Leader: ខី វណ្ណារ៉ុង
- * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត មុត ភិរាក់នាន់ (ថ្ងៃព្រហស្បតិ៍)
- */
+import com.bbu.attendance.attendance.dto.AttendanceCheckInRequest;
+import com.bbu.attendance.attendance.dto.AttendanceCheckInResponse;
+import com.bbu.attendance.attendance.entity.AttendanceRecord;
+
+import java.util.List;
+
 public interface AttendanceService {
-    // TODO: និស្សិត មុត ភិរាក់នាន់ ត្រូវបំពេញ Method Signatures នៅទីនេះ
+
+    /**
+     * ផ្ទៀងផ្ទាត់ និងកត់ត្រាវត្តមាននិស្សិតតាមរយៈ 10-Step Verification Pipeline
+     */
+    AttendanceCheckInResponse checkInStudent(
+            AttendanceCheckInRequest request,
+            String studentUsername,
+            String clientIp
+    );
+
+    /**
+     * ទាញយកបញ្ជីវត្តមាននិស្សិតទាំងអស់ក្នុង Session នីមួយៗ
+     */
+    List<AttendanceRecord> getSessionRoster(Long sessionId);
 }

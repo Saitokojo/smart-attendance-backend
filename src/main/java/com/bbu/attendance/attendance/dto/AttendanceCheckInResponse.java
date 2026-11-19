@@ -1,10 +1,20 @@
 package com.bbu.attendance.attendance.dto;
 
-/**
- * DTO ឆ្លើយតបលទ្ធផលវត្តមានសម្រេចជាស្ថាពរ ១០០% ជូនសិស្ស
- * បង្កើតគ្រោងទុកជាមុនដោយ Team Leader: ខី វណ្ណារ៉ុង
- * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត មុត ភិរាក់នាន់ (ថ្ងៃព្រហស្បតិ៍)
- */
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AttendanceCheckInResponse {
-    // TODO: និស្សិត មុត ភិរាក់នាន់ ត្រូវបំពេញ Fields, Getters/Setters ឬ Lombok Annotations នៅទីនេះ
+
+    private Long attendanceId;
+    private Long sessionId;
+    private String studentUsername;
+    private String status;
+    private double distanceMeters;
+    private String verificationSummary;
+    private LocalDateTime verifiedAt;
 }

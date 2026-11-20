@@ -35,6 +35,16 @@
       "key": "class_id",
       "value": "1",
       "type": "string"
+    },
+    {
+      "key": "teacher_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "dynamic_qr_token",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
@@ -1378,6 +1388,648 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "37. គ្រូបើកដំណើរការបង្កើត Dynamic QR Code ដំបូង (Generate Dynamic QR - 200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Dynamic QR generated with valid token and 15s expiration\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data.qrToken).to.be.a(\"string\");",
+              "    pm.expect(jsonData.data.expiresInSeconds).to.eql(15);",
+              "    pm.collectionVariables.set(\"dynamic_qr_token\", jsonData.data.qrToken);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{teacher_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/qr/session/1/generate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "qr",
+            "session",
+            "1",
+            "generate"
+          ]
+        }
+      }
+    },
+    {
+      "name": "38. សិស្សធ្វើការ Check-In វត្តមានជោគជ័យតាម The 10-Step Pipeline (Student Check-In 100% Valid - 200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Attendance registered successfully\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data.status).to.eql(\"PRESENT\");",
+              "    pm.expect(jsonData.data.sessionId).to.eql(1);",
+              "    pm.expect(jsonData.data.distanceMeters).to.be.below(40.1);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"{{dynamic_qr_token}}\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "39. តេស្ត Anti-Replay: ស្កេន QR ដដែលម្តងទៀតត្រូវបដិសេធដោយ Redis Nonce Burn (Scan Burned QR - 409 Conflict)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 409 Conflict\", function () {",
+              "    pm.response.to.have.status(409);",
+              "});",
+              "pm.test(\"Anti-Replay blocked already consumed nonce\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include(\"ប្រើប្រាស់រួច\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"{{dynamic_qr_token}}\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "40. តេស្ត QR Expired: ស្កេនកូដ QR ហួសកំណត់ ១៥ វិនាទីត្រូវបដិសេធ (Scan Expired QR - 400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test(\"Expired QR blocked\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"eyJzZXNzaW9uSWQiOjEsIm5vbmNlIjoiZXhwaXJlZC05OTkiLCJleHBpcmVzQXQiOjE2MDAwMDAwMDB9.INVALID_SIG\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "41. តេស្ត Geofence Out-of-Range: សិស្សស្កេនក្រៅបរិវេណ ៤០ ម៉ែត្រត្រូវបដិសេធ (GPS Beyond 40m - 400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test(\"Geofence violation detected and blocked\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include(\"ក្រៅបរិវេណ\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"{{dynamic_qr_token}}\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.57,\n  \"longitude\": 104.93\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "42. តេស្ត Anti-Proxy Device Mismatch: ស្កេនដោយទូរស័ព្ទផ្សេងពីទូរស័ព្ទដែលបាន Bind (Device UUID Mismatch - 400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test(\"Device mismatch detected\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include(\"ឧបករណ៍\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"{{dynamic_qr_token}}\",\n  \"deviceUuid\": \"STRANGER-DEVICE-UUID-99999\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "43. តេស្ត Duplicate Check-In: សិស្សព្យាយាម Check-In ម្ដងទៀតក្នុង Session ដដែល (Duplicate Attendance - 409 Conflict)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 409 Conflict\", function () {",
+              "    pm.response.to.have.status(409);",
+              "});",
+              "pm.test(\"Duplicate attendance blocked\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include(\"រួចរាល់ហើយ\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"{{dynamic_qr_token}}\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "44. តេស្ត QR Tampering: កែប្រែទិន្នន័យ Payload ឬ HMAC Signature ខុស (Invalid/Tampered QR Token - 400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test(\"Tampered QR token rejected\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData.message).to.include(\"កែបន្លំ\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 1,\n  \"qrToken\": \"TAMPERED_HEADER.TAMPERED_PAYLOAD.TAMPERED_SIG\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "45. តេស្ត Session Inactive / Not Found: ស្កេនពេល Session មិនមាន ឬត្រូវបានបិទ (Session Inactive - 400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test(\"Inactive or non-existent session rejected\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 999999,\n  \"qrToken\": \"{{dynamic_qr_token}}\",\n  \"deviceUuid\": \"IPHONE-UUID-12345-ABCDE\",\n  \"latitude\": 11.5564,\n  \"longitude\": 104.9282\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/attendance/check-in",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "check-in"
+          ]
+        }
+      }
+    },
+    {
+      "name": "46. គ្រូមើលបញ្ជីវត្តមានសិស្សក្នុង Session (Get Session Roster - 200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Session roster retrieved successfully\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{teacher_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/attendance/session/1/roster",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "session",
+            "1",
+            "roster"
+          ]
+        }
+      }
+    },
+    {
+      "name": "47. តេស្ត RBAC: សិស្សព្យាយាមមើលបញ្ជីវត្តមាន Session ត្រូវបដិសេធ (Student Cannot View Session Roster - 403 Forbidden)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403 Forbidden\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/attendance/session/1/roster",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "attendance",
+            "session",
+            "1",
+            "roster"
+          ]
+        }
+      }
+    },
+    {
+      "name": "48. Web Projector ទាញយកទិន្នន័យ QR Base64 Image (Teacher Projector View - 200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Projector payload contains Base64 image and countdown\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data.qrBase64Image).to.include(\"data:image/png;base64,\");",
+              "    pm.expect(jsonData.data.countdownSeconds).to.eql(15);",
+              "    pm.expect(jsonData.data.refreshIntervalMs).to.eql(15000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{teacher_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/qr/projector/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "qr",
+            "projector",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "49. Web Projector ទាញយក Live Roster នៃ Session (Projector Live Roster - 200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Live Roster retrieved for projector\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{teacher_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/qr/projector/1/live-roster",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "qr",
+            "projector",
+            "1",
+            "live-roster"
+          ]
+        }
+      }
+    },
+    {
+      "name": "50. តេស្ត RBAC: សិស្សព្យាយាមចូលប្រើ Projector View ត្រូវបដិសេធ (Student Access Projector - 403 Forbidden)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403 Forbidden\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{student_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/qr/projector/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "qr",
+            "projector",
+            "1"
+          ]
+        }
+      }
     }
   ]
 }

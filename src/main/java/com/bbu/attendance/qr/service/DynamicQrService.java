@@ -1,10 +1,23 @@
 package com.bbu.attendance.qr.service;
 
+import com.bbu.attendance.qr.dto.GenerateQrResponse;
+import com.bbu.attendance.qr.dto.VerifyQrRequest;
+import com.bbu.attendance.qr.dto.VerifyQrResponse;
+
 /**
  * Interface គ្រប់គ្រងដំណើរការ Dynamic QR Generation & Verification Orchestration
- * បង្កើតគ្រោងទុកជាមុនដោយ Team Leader: ខី វណ្ណារ៉ុង
- * ទទួលខុសត្រូវបំពេញកូដដោយ៖ និស្សិត មុត ភិរាក់នាន់ (ថ្ងៃព្រហស្បតិ៍)
+ * សុពលភាពកូដ ១៥ វិនាទី (Rolling Refresh)
  */
 public interface DynamicQrService {
-    // TODO: និស្សិត មុត ភិរាក់នាន់ ត្រូវបំពេញ Method Signatures នៅទីនេះ
+
+    /**
+     * Generates a new cryptographically signed dynamic QR token for the specified classroom session.
+     * Registers the random nonce into Redis with 15 seconds TTL.
+     */
+    GenerateQrResponse generateRollingQr(Long sessionId);
+
+    /**
+     * Verifies student's scanned QR token against cryptographic signature and Redis nonce.
+     */
+    VerifyQrResponse verifyStudentScan(VerifyQrRequest request, String studentUsername);
 }

@@ -8,11 +8,15 @@ import com.bbu.attendance.attendance.service.AttendanceService;
 import com.bbu.attendance.common.exception.InvalidQrException;
 import com.bbu.attendance.common.exception.QrExpiredException;
 import com.bbu.attendance.common.util.GeoUtils;
+import com.bbu.attendance.device.entity.Device;
+import com.bbu.attendance.device.repository.DeviceRepository;
+import com.bbu.attendance.entity.User;
 import com.bbu.attendance.qr.dto.DynamicQrPayload;
 import com.bbu.attendance.qr.service.QrCryptoService;
 import com.bbu.attendance.qr.service.QrNonceService;
-import lombok.RequiredArgsConstructor;
+import com.bbu.attendance.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * THE 10-STEP ATTENDANCE VERIFICATION PIPELINE IMPLEMENTATION
@@ -28,12 +33,13 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class AttendanceServiceImpl implements AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
     private final QrCryptoService qrCryptoService;
     private final QrNonceService qrNonceService;
+    private final UserRepository userRepository;
+    private final DeviceRepository deviceRepository;
 
     @Value("${app.qr.validity-seconds:15}")
     private int validitySeconds;
@@ -45,12 +51,42 @@ public class AttendanceServiceImpl implements AttendanceService {
     private static final BigDecimal ROOM_LON = new BigDecimal("104.92820990");
     private static final BigDecimal ROOM_RADIUS = new BigDecimal("40.00");
 
+    @Autowired
+    public AttendanceServiceImpl(
+            AttendanceRepository attendanceRepository,
+            QrCryptoService qrCryptoService,
+            QrNonceService qrNonceService,
+            @Autowired(required = false) UserRepository userRepository,
+            @Autowired(required = false) DeviceRepository deviceRepository) {
+        this.attendanceRepository = attendanceRepository;
+        this.qrCryptoService = qrCryptoService;
+        this.qrNonceService = qrNonceService;
+        this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
+    }
+
+    public AttendanceServiceImpl(
+            AttendanceRepository attendanceRepository,
+            QrCryptoService qrCryptoService,
+            QrNonceService qrNonceService) {
+        this(attendanceRepository, qrCryptoService, qrNonceService, null, null);
+    }
+
     @Override
     @Transactional
     public AttendanceCheckInResponse checkInStudent(AttendanceCheckInRequest request, String studentUsername, String clientIp) {
         log.info("Processing 10-Step Check-in Pipeline for student: {}", studentUsername);
 
-        // ជំហានទី ១ & ២៖ Decode QR Payload & ផ្ទៀងផ្ទាត់ Session
+        // ជំហានទី ១៖ ផ្ទៀងផ្ទាត់ Student Identity
+        Long studentId = 1L;
+        if (userRepository != null && studentUsername != null) {
+            Optional<User> studentOpt = userRepository.findByEmail(studentUsername);
+            if (studentOpt.isPresent()) {
+                studentId = studentOpt.get().getId();
+            }
+        }
+
+        // ជំហានទី ២៖ Decode QR Payload & ផ្ទៀងផ្ទាត់ Session
         DynamicQrPayload payload = qrCryptoService.decodePayloadFromString(request.getQrToken());
         if (!payload.getSessionId().equals(request.getSessionId())) {
             throw new InvalidQrException("កូដ QR នេះមិនត្រូវគ្នានឹង Session ថ្នាក់រៀនបច្ចុប្បន្នឡើយ!");
@@ -77,12 +113,22 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
 
         // ជំហានទី ៧៖ ពិនិត្យ Duplicate Check-in Guard (មិនឱ្យកត់វត្តមានជាន់គ្នា)
-        Long studentId = 1L; // Context user ID
         if (attendanceRepository.existsBySessionIdAndStudentId(request.getSessionId(), studentId)) {
             throw new RuntimeException("អ្នកបានកត់វត្តមានក្នុង Session នេះរួចរាល់ហើយ!");
         }
 
-        // ជំហានទី ៨ & ៩៖ បង្កើត និងរក្សាទុកកំណត់ត្រាវត្តមានផ្លូវការ
+        // ជំហានទី ៨៖ Anti-Proxy Device UUID Verification (ត្រូវគ្នានឹងទូរស័ព្ទដែលបាន Bind)
+        if (deviceRepository != null) {
+            Optional<Device> boundDeviceOpt = deviceRepository.findByUserIdAndIsActiveTrue(studentId);
+            if (boundDeviceOpt.isPresent()) {
+                Device boundDevice = boundDeviceOpt.get();
+                if (!boundDevice.getDeviceUuid().equalsIgnoreCase(request.getDeviceUuid().trim())) {
+                    throw new RuntimeException("ឧបករណ៍ទូរស័ព្ទនេះមិនត្រូវគ្នានឹងទូរស័ព្ទដែលបានចុះឈ្មោះឡើយ! (Anti-Proxy Guard)");
+                }
+            }
+        }
+
+        // ជំហានទី ៩ & ១០៖ បង្កើត និងរក្សាទុកកំណត់ត្រាវត្តមានផ្លូវការ & ឆ្លើយតប
         AttendanceRecord record = AttendanceRecord.builder()
                 .sessionId(request.getSessionId())
                 .studentId(studentId)
@@ -98,7 +144,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         AttendanceRecord saved = attendanceRepository.save(record);
 
-        // ជំហានទី ១០៖ ឆ្លើយតបលទ្ធផលជោគជ័យ
         return AttendanceCheckInResponse.builder()
                 .attendanceId(saved.getId())
                 .sessionId(saved.getSessionId())

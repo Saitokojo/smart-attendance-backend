@@ -54,6 +54,20 @@
         const qrImage = document.getElementById('qrImage');
         const liveRosterList = document.getElementById('liveRosterList');
 
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>'"]/g, function(tag) {
+                const chars = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                };
+                return chars[tag] || tag;
+            });
+        }
+
         async function fetchQr() {
             try {
                 const res = await fetch(`/api/qr/projector/${sessionId}`);
@@ -78,9 +92,10 @@
                 const roster = data.data || data;
                 if (Array.isArray(roster) && roster.length > 0) {
                     liveRosterList.innerHTML = roster.map(item => {
-                        const dev = item.deviceUuid ? item.deviceUuid.substring(0, 8) + '...' : 'N/A';
-                        const time = item.verifiedAt ? item.verifiedAt.substring(11, 19) : '';
-                        return `<li class="roster-item"><span class="badge-present">PRESENT</span> <strong>${item.studentUsername}</strong> (${dev}) - ${time}</li>`;
+                        const dev = item.deviceUuid ? escapeHtml(item.deviceUuid.substring(0, 8)) + '...' : 'N/A';
+                        const time = item.verifiedAt ? escapeHtml(item.verifiedAt.substring(11, 19)) : '';
+                        const safeUser = escapeHtml(item.studentUsername);
+                        return `<li class="roster-item"><span class="badge-present">PRESENT</span> <strong>${safeUser}</strong> (${dev}) - ${time}</li>`;
                     }).join('');
                 }
             } catch (err) {

@@ -5,12 +5,14 @@ import com.bbu.attendance.entity.User;
 import com.bbu.attendance.repository.RoleRepository;
 import com.bbu.attendance.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
@@ -31,7 +33,7 @@ public class DataInitializer implements CommandLineRunner {
                         .description("តួនាទីជា " + roleName + " ក្នុងប្រព័ន្ធវត្តមាន")
                         .build();
                 roleRepository.save(role);
-                System.out.println(">>> [AUTO-SEED] បានបង្កើត Role ដោយស្វ័យប្រវត្តិ: " + roleName);
+                log.info(">>> [AUTO-SEED] បានបង្កើត Role ដោយស្វ័យប្រវត្តិ: {}", roleName);
             }
         }
 
@@ -52,7 +54,7 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
 
             userRepository.save(adminUser);
-            System.out.println(">>> [AUTO-SEED] បានបង្កើតគណនី Admin ដំបូងដោយស្វ័យប្រវត្តិ: " + adminEmail + " (Password: Admin@123456)");
+            log.info(">>> [AUTO-SEED] បានបង្កើតគណនី Admin ដំបូងដោយស្វ័យប្រវត្តិ: {} (Password: Admin@123456)", adminEmail);
         }
     }
 }
